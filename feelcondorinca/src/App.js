@@ -1,23 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+
+function Login() {
+  return(
+      <div className="contenedor-login">
+        <h1>Usuario</h1>
+        <input type="text" name="Usuario"/>
+        <h1>Contraseña</h1>
+        <input type="text" name="Contrasena"/>
+      </div>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <header>Esto es el login</header>
+      <Login />
+      <img src={require("../src/Imagenes/Facilito.png")}/>
     </div>
   );
 }
