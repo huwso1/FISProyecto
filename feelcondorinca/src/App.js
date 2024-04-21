@@ -1,25 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import React, { useState } from 'react';
+import Dashboard from './Componentes/Dashboard.js';
+import Login from './Componentes/login.js';
+import NavigateBar from './Componentes/NavigateBar.js';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import CrearUnidad from './Componentes/crearunidad.js';
 
-function Login() {
-  return(
-      <div className="contenedor-login">
-        <h1>Usuario</h1>
-        <input type="text" name="Usuario"/>
-        <h1>Contraseña</h1>
-        <input type="text" name="Contrasena"/>
-      </div>
-  );
-}
 
 function App() {
   return (
-    <div>
-      <header>Esto es el login</header>
-      <Login />
-      <img src={require("../src/Imagenes/Facilito.png")}/>
-    </div>
+    <BrowserRouter>
+     <Routes>
+      <Route path="/" element={<Login/>}></Route>
+      <Route path="/NavigateBar" element={<NavigateBar/>}>
+      <Route index element={<Dashboard />} />
+        <Route  path="Crearunidad" element ={<CrearUnidad/>}/>
+        <Route  path="AdministrarU" element ={<Login/>}/>
+        <Route  path="CrearE" element ={<Login/>}/>
+      </Route>
+      
+     </Routes>
+    </BrowserRouter>
   );
 }
 
