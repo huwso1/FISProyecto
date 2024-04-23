@@ -1,9 +1,6 @@
 import React from 'react';
-import Card  from 'react-bootstrap/Card';
-import CardGroup from 'react-bootstrap/CardGroup';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import {Outlet} from 'react-router-dom';
 import './css/Navbar.css';
