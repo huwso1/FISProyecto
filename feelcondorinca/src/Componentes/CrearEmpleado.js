@@ -1,11 +1,18 @@
+import {useState, useEffect} from 'react';
 import React from 'react';
 import CardBody from 'react-bootstrap/esm/CardBody';
 import Card  from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Form from 'react-bootstrap/Form';
 import './css/Unidad.css';
-import {useState} from 'react';
-function CrearUnidad (){
+
+function CrearEmpleado(){
+const [listaUnidades,setlistaUnidades] = useState(["UPJ","Gancho amarillo","Narcoticos","Homicidios"]);
+const [Unidad,setUnidad]=useState('');
+const [nombre,setNombre]=useState('');
+const [apellido,setApellido]=useState('');
+const [documento,setDocumento]=useState('');
+const [telefono,setTelefono]=useState('');
 var horas=["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
 const [Lunesi,Setlunesi]=useState("");
 const [Lunesf,Setlunesf]=useState("");
@@ -20,27 +27,37 @@ const [Viernesf,Setviernesf]=useState("");
 const [Sabadosi,Setsabadosi]=useState("");
 const [Sabadosf,SetSabadosf]=useState("");
 const [message,SetMessage]=useState("");
+
+useEffect(()=>{
+    // Aqui iria la peticion para recuperar las unidades
+    },[]
+)
+
 return(
-  
-<div className="center-card">
+    <div className="center-card2">
 
-<Card style={{border:'none'}} >
+<h2> Ingrese los datos del nuevo empleado</h2>
 
-<h2> Ingrese los datos de la nueva unidad</h2>
-
-</Card>
-
-<Card style={{  width:'40rem', marginTop:'7rem', backgroundColor:'#D6F2F5' }}>
+<Card style={{  width:'40rem', marginTop:'3rem', backgroundColor:'#D6F2F5' }}>
 <CardBody>
 <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-        <Form.Label >Nombre Unidad</Form.Label>
-        <Form.Control type="text" placeholder="Distri Sanitas" />
+        <Form.Label >Nombre Empleado</Form.Label>
+        <Form.Control type="text" placeholder="Robinson" value={nombre} onChange={(e)=>{setNombre(e.target.value.trim())}} />
+        <Form.Label >Apellido Empleado</Form.Label>
+        <Form.Control type="text" placeholder="Crussoe" value={apellido} onChange={(e)=>{setApellido(e.target.value.trim())}} />
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Intervalo minimo de prestamo(En minutos)</Form.Label>
-        <Form.Control as="input"  />
-        
+        <Form.Label>Documento empleado</Form.Label>
+        <Form.Control type="number" placeholder="Documento" value={documento} onChange={(e)=>{setDocumento(e.target.value.trim())}} />
+        <Form.Label>Telefono</Form.Label>
+        <Form.Control type="number" placeholder="3224147756" value={documento} onChange={(e)=>{setTelefono(e.target.value.trim())}} />
+        <Form.Label style={{padding:'0em 2em'}}>Unidad</Form.Label>
+        <Form.Control as="select" value={Unidad} onChange={(e)=>{setUnidad(e.target.value.trim())}} >
+        {listaUnidades.map((e)=>{
+          return <option value={e}>{e}</option>;
+        })}
+        </Form.Control>
         <Form.Label >Horarios</Form.Label>
         <div></div>
         <Card>
@@ -182,6 +199,6 @@ return(
 </Card>
 <h1>{Lunesi}</h1>
 </div>
-);
+)
 }
-export default CrearUnidad;
+export default CrearEmpleado;

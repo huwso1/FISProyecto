@@ -7,7 +7,7 @@ import Login from './Componentes/login.js';
 import NavigateBar from './Componentes/NavigateBar.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import CrearUnidad from './Componentes/crearunidad.js';
-
+import CrearEmpleado from './Componentes/CrearEmpleado.js';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
       <Route index element={<Dashboard />} />
         <Route  path="Crearunidad" element ={<CrearUnidad/>}/>
         <Route  path="AdministrarU" element ={<Login/>}/>
-        <Route  path="CrearE" element ={<Login/>}/>
+        <Route  path="CrearE" element ={<CrearEmpleado/>}/>
       </Route>
       
      </Routes>
