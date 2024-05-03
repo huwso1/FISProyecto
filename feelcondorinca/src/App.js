@@ -9,6 +9,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import CrearUnidad from './Componentes/crearunidad.js';
 import CrearEmpleado from './Componentes/CrearEmpleado.js';
 import AdministrarU from './Componentes/ComponentesAdmin/AdministrarU.js';
+import CrearRecurso from './Componentes/crearRecurso.js';
+import AdministrarR from './Componentes/ComponentesAdmin/AdministrarR.js';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route  path="Crearunidad" element ={<CrearUnidad/>}/>
         <Route  path="AdministrarU" element ={<AdministrarU/>}/>
         <Route  path="CrearE" element ={<CrearEmpleado/>}/>
+        <Route  path="CrearR" element ={<CrearRecurso/>}/>
+        <Route  path="AdministrarR" element ={<AdministrarR/>}/>
       </Route>
       
      </Routes>

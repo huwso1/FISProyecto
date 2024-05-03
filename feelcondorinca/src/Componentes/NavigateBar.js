@@ -14,6 +14,8 @@ import './css/Navbar.css';
         <Navbar.Brand href="/NavigateBar/Crearunidad">Crear Unidad</Navbar.Brand>
         <Navbar.Brand href="/NavigateBar/AdministrarU">Administrar unidad</Navbar.Brand>
         <Navbar.Brand href="/NavigateBar/CrearE">Crear Empleado</Navbar.Brand>
+        <Navbar.Brand href="/NavigateBar/CrearR">Crear Recurso</Navbar.Brand>
+        <Navbar.Brand href="/NavigateBar/AdministrarR">Administrar recurso</Navbar.Brand>
         </Nav>
         </Container>
         

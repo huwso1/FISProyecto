@@ -1,9 +1,10 @@
 class Unidadmap{
 
-    constructor(id,nombre,cantidaddereservas,horariolunesi,horariolunesf,horariomartesi,horariomartesf,horariomiercolesi,horariomiercolesf
+    constructor(id,nombre,cantidaddereservas,Unidad,horariolunesi,horariolunesf,horariomartesi,horariomartesf,horariomiercolesi,horariomiercolesf
         ,horariojuevesi,horariojuevesf,horarioviernesi,horarioviernesf,horariosabadoi,horariosabadof){
         this.id=id;
         this.nombre=nombre;
+        this.Unidad=Unidad;
         this.cantidaddereservas=cantidaddereservas;
         this.horariolunesi=horariolunesi;
         this.horariolunesf=horariolunesf;
