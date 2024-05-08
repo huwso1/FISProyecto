@@ -8,8 +8,8 @@ import Unidad from './Unidad';
 import '../css/Unidad.css';
 
 function Listaunidades({unidades,handlerunidades}){
-const handlerUnidades=(nombreM)=>{
-    handlerunidades(nombreM);
+const handlerUnidades=(nombreM,idunidad)=>{
+    handlerunidades(nombreM,idunidad);
 }
 var rows=0;
 
@@ -34,7 +34,7 @@ return(
     </CardGroup>
     { unidades.map((unidad)=>{
         rows++;
-        return <Unidad  Nombre={unidad.nombre} CantidaddeReservas={unidad.cantidaddereservas} handler={handlerUnidades}></Unidad>;
+        return <Unidad  Nombre={unidad.nombre} CantidaddeReservas={unidad.cantidaddereservas} idunidad={unidad.id} handler={handlerUnidades}></Unidad>;
     })}
     </div>
 )

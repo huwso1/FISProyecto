@@ -8,8 +8,8 @@ import Recurso from './Recurso';
 import '../css/Unidad.css';
 
 function Listarecursos({recursos,handlerrecurso,unidad}){
-const handlerlista=(nombreM)=>{
-    handlerrecurso(nombreM);
+const handlerlista=(nombreM,idrecurso)=>{
+    handlerrecurso(nombreM,idrecurso);
 }
 var rows=0;
 
@@ -32,12 +32,14 @@ return(
             
         </Card>
     </CardGroup>
+    
     { recursos?.map((recurso)=>{
+        //Cambiar la comparacion por el id de la unidad en lugar del nombre
         var umidad=recurso.Unidad+'';
         var umidadbuscada=unidad+'';
         console.log(umidad);
         if(umidad.toUpperCase()==umidadbuscada.toUpperCase()){
-        return <Recurso  Nombre={recurso.nombre} CantidaddeReservas={recurso.cantidaddereservas} handler={handlerlista}></Recurso>;
+        return <Recurso  Nombre={recurso.nombre} CantidaddeReservas={recurso.cantidaddereservas} idrecurso={recurso.id} handler={handlerlista}></Recurso>;
         }
         return <></>;
     })}

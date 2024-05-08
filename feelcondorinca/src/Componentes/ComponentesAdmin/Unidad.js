@@ -6,11 +6,11 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 
-function Unidad({Nombre,CantidaddeReservas,handler}){
+function Unidad({Nombre,CantidaddeReservas,idunidad,handler}){
     
 const [debug,setdebug]=useState();
-const handlemodificacion=(Nombre)=>{
-    handler(Nombre);
+const handlemodificacion=(Nombre,idunidad)=>{
+    handler(Nombre,idunidad);
 }
 return(
     <CardGroup>
@@ -27,7 +27,7 @@ return(
         </Card>
         <Card>
             <CardBody>
-            <Form.Control as='input' type='button' value='Modificar' name='Modificar' onClick={()=>{handlemodificacion(Nombre)}}></Form.Control>
+            <Form.Control as='input' type='button' value='Modificar' name='Modificar' onClick={()=>{handlemodificacion(Nombre,idunidad)}}></Form.Control>
             </CardBody>
         </Card>
     </CardGroup>

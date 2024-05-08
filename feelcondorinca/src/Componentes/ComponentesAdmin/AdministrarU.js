@@ -7,16 +7,20 @@ import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 import Unidadmap from './Mapeo/Unidadmap';
 import Listaunidades from './Listaunidades';
+import CrearUnidad from '../crearunidad';
+import ListaEmpleados from './ListaEmpleados';
 
 
 function AdministrarU(){
+const [idUnidad,SetidUnidad]=useState();
 const [ordenarPor,setOrdenar]=useState("");
 const ordenar=["Nombre","Cantidad de reservas"];
 const [unidades,setUnidades]=useState([new Unidadmap(1,"Tinderud",32),new Unidadmap(2,"Laboratorios",92),new Unidadmap(3,"Homicidios",300)]);
 const [isModifying,setModifying]=useState(true);
 const [nombreM,setNombrem]=useState('');
 
-const handlermod=(nombreunidad)=>{
+const handlermod=(nombreunidad,idunidad)=>{
+    SetidUnidad(idunidad);
     setNombrem(nombreunidad);
     setModifying(false);
 }
@@ -65,7 +69,14 @@ return(
 
 
 )}else{
-    return(<p>{nombreM}</p>)
+    return(
+    <div>
+    <CardGroup>
+     <ListaEmpleados idunidad={idUnidad}></ListaEmpleados>
+    <CrearUnidad idunidad={idUnidad} nombreunidad={nombreM}></CrearUnidad>
+    </CardGroup>
+    </div>
+  )
 }
 }
 export default AdministrarU;

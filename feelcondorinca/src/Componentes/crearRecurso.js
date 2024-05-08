@@ -7,8 +7,9 @@ import './css/Unidad.css';
 import {useState} from 'react';
 import Unidadmap from './ComponentesAdmin/Mapeo/Unidadmap';
 
-function CrearRecurso (){
+function CrearRecurso ({idrecurso,nombrerecurso}){
 var horas=["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+const [Nombre,SetNombre]=useState("");
 const [Lunesi,Setlunesi]=useState("");
 const [Lunesf,Setlunesf]=useState("");
 const [Martesi,Setmartesi]=useState("");
@@ -25,6 +26,32 @@ const [message,SetMessage]=useState("");
 const [unidad,SetUnidad]=useState('');
 const [unidades,SetUnidades]=useState([new Unidadmap(1,"Homicidios"),new Unidadmap(2,"Laboratorios"),new Unidadmap(3,"Documentales Holman")]);
 
+if(idrecurso!=null){
+  //Aqui se realizara la peticion al back
+};
+
+function minhour(Horainicial){
+    var index=0;
+    horas.find((hour)=>{ index++; if(hour==Horainicial){ return true;} return false;})
+    
+    return horas.slice(index);
+    
+
+};
+
+function titulounidad(){
+  if(nombrerecurso!==null){
+    return <h2> Ingrese los datos del recurso {nombrerecurso}</h2>;
+  }
+  return <h2> Ingrese los datos del nuevo recurso</h2>;
+}
+function Nameset(){
+  if(nombrerecurso!=null){
+    return(<></>);
+  }
+  return <><Form.Label >Nombre Recurso</Form.Label>
+  <Form.Control type="text" placeholder="Distri Sanitas" value={Nombre} onChange={(element)=>{SetNombre(element.target.value)}} /> </>;
+}
 
 
 
@@ -38,7 +65,7 @@ return(
 
 <Card style={{border:'none',marginTop:'20rem',height:"5px"}} >
 
-<h2> Ingrese los datos del nuevo recurso</h2>
+{titulounidad()}
 
 </Card>
 
@@ -46,8 +73,7 @@ return(
 <CardBody>
 <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-        <Form.Label >Nombre Recurso</Form.Label>
-        <Form.Control type="text" placeholder="Distri Sanitas" />
+        {Nameset()}
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>Unidad</Form.Label>
@@ -76,7 +102,7 @@ return(
         </div>
         <Form.Label style={{padding:'0em 2em'}}>Hora termino</Form.Label>
         <Form.Control as="select" value={Lunesf} onChange={(e)=>{Setlunesf(e.target.value.trim())}} >
-        {horas.map((e)=>{
+        {minhour(Lunesi).map((e)=>{
           return <option value={e}>{e}</option>;
         })}
         </Form.Control>
@@ -97,7 +123,7 @@ return(
         </div>
         <Form.Label style={{padding:'0em 2em'}}>Hora termino</Form.Label>
         <Form.Control as="select" value={Martesf} onChange={(e)=>{Setmartesf(e.target.value.trim())}} >
-        {horas.map((e)=>{
+        {minhour(Martesi).map((e)=>{
           return <option value={e}>{e}</option>;
         })}
         </Form.Control>
@@ -118,7 +144,7 @@ return(
         </div>
         <Form.Label style={{padding:'0em 2em'}}>Hora termino</Form.Label>
         <Form.Control as="select" value={Miercolesf} onChange={(e)=>{Setmiercolesf(e.target.value.trim())}} >
-        {horas.map((e)=>{
+        {minhour(Miercolesi).map((e)=>{
             
           return <option value={e}>{e}</option>;
         })}
@@ -139,7 +165,7 @@ return(
         </div>
         <Form.Label style={{padding:'0em 2em'}}>Hora termino</Form.Label>
         <Form.Control as="select" value={Juevesf} onChange={(e)=>{Setjuevesf(e.target.value.trim())}}  >
-        {horas.map((e)=>{
+        {minhour(Juevesi).map((e)=>{
           return <option value={e}>{e}</option>;
         })}
         </Form.Control>
@@ -160,7 +186,7 @@ return(
         </div>
         <Form.Label style={{padding:'0em 2em'}}>Hora termino</Form.Label>
         <Form.Control as="select" value={Viernesf} onChange={(e)=>{Setviernesf(e.target.value.trim())}} >
-        {horas.map((e)=>{
+        {minhour(Viernesf).map((e)=>{
           return <option value={e}>{e}</option>;
         })}
         </Form.Control>
@@ -182,7 +208,7 @@ return(
         </div>
         <Form.Label style={{padding:'0em 2em'}}>Hora termino</Form.Label>
         <Form.Control as="select" value={Sabadosf} onChange={(e)=>{SetSabadosf(e.target.value.trim())}} >
-        {horas.map((e)=>{
+        {minhour(Sabadosi).map((e)=>{
           return <option value={e}>{e}</option>;
         })}
         </Form.Control>

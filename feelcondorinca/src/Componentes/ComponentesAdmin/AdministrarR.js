@@ -8,19 +8,22 @@ import '../css/Unidad.css';
 import Recursomap from './Mapeo/Recursomap';
 import Listarecursos from './Listarecursos';
 import Unidadmap from './Mapeo/Unidadmap';
+import CrearRecurso from '../crearRecurso';
 
 
 function AdministrarR(){
+const [idRecurso,SetidRecurso]=useState();
 const [ordenarPor,setOrdenar]=useState("");
 const ordenar=["Nombre","Cantidad de reservas"];
 const [recursos,setRecursos]=useState([new Recursomap(1,"Perros",32,"Tinderud"),new Recursomap(2,"Gatos",92,"Tinderud"),new Recursomap(3,"Homicidios",300,"Laboratorios")]);
 const [isModifying,setModifying]=useState(true);
-const [nombreM,setNombrem]=useState('');
+const [nombreM,SetnombreM]=useState();
 const [unidades,setUnidades]=useState([new Unidadmap(1,"Tinderud",32),new Unidadmap(2,"Laboratorios",92),new Unidadmap(3,"Homicidios",300)]);
 const [unidadS,setUnidadS]=useState('Tinderud');
 
-const handlermod=(nombrerecurso)=>{
-    setNombrem(nombrerecurso);
+const handlermod=(nombrerecurso,idrecurso)=>{
+    SetidRecurso(idrecurso);
+    SetnombreM(nombrerecurso);
     setModifying(false);
 }
 if(ordenarPor==='Nombre'){
@@ -75,7 +78,7 @@ return(
 
 
 )}else{
-    return(<p>{nombreM}</p>)
+    return(<CrearRecurso idrecurso={idRecurso} nombrerecurso={nombreM}></CrearRecurso>)
 }
 }
 export default AdministrarR;
