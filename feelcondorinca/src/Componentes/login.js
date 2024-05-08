@@ -19,7 +19,7 @@ function Login() {
                     <input type="text" name="Contrasena"/>
                 </div>
                 <div className="form-group" class = "probar">
-                    <button type="button" className="btn btn-primary" onClick={() => navigate('/NavigateBar')}>Ingresar
+                    <button type="button" className="btn btn-primary" onClick={() => navigate('/NavigateBarAfiliado')}>Ingresar
                     </button>
                 </div>
                 <p></p>

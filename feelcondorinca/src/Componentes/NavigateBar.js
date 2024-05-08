@@ -17,9 +17,9 @@ import './css/Navbar.css';
         <Navbar.Brand href="/NavigateBar/CrearR">Crear Recurso</Navbar.Brand>
         <Navbar.Brand href="/NavigateBar/AdministrarR">Administrar recurso</Navbar.Brand>
         </Nav>
-        </Container>
-        
-    </Navbar>
+      </Container>
+
+</Navbar>
     <Outlet/>
     </div>
     
