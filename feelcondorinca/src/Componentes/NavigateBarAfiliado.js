@@ -12,9 +12,9 @@ function NavigateBarAfiliado() {
             <Navbar bg="primary" variant="dark" expand="lg">
                 <Container>
                     <Nav classname="me-auto">
-                        <Navbar.Brand href="/NavigateBar/Crearunidad"><img src={require("./Imagenes/iconolupa.png")} alt="icon"/>Buscar
+                        <Navbar.Brand href="/NavigateBarAfiliado/Consultarrecursos"><img src={require("./Imagenes/iconolupa.png")} alt="icon"/>Buscar
                             recursos</Navbar.Brand>
-                        <Navbar.Brand href="/NavigateBar/AdministrarU"><img src={require("./Imagenes/calendar (1).png")} alt="icon"/>Consultar
+                        <Navbar.Brand href="/NavigateBarAfiliado/MisReservas"><img src={require("./Imagenes/calendar (1).png")} alt="icon"/>Consultar
                             reservas</Navbar.Brand>
                     </Nav>
                 </Container>

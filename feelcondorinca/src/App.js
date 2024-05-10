@@ -13,6 +13,7 @@ import CrearRecurso from './Componentes/crearRecurso.js';
 import AdministrarR from './Componentes/ComponentesAdmin/AdministrarR.js';
 import Afiliado from "./Componentes/Afiliado";
 import NavigateBarAfiliado from "./Componentes/NavigateBarAfiliado";
+import InterfazRecursos from './Componentes/ComponentesAfiliado/InterfazRecursos.js';
 
 function App() {
   return (
@@ -28,11 +29,10 @@ function App() {
         <Route  path="AdministrarR" element ={<AdministrarR/>}/>
       </Route>
 
-     <Route path="/" element={<Login/>}></Route>
      <Route path="/NavigateBarAfiliado" element={<NavigateBarAfiliado/>}>
          <Route index element={<Afiliado />} />
-         <Route  path="Crearunidad" element ={<CrearUnidad/>}/>
-         <Route  path="AdministrarU" element ={<AdministrarU/>}/>
+         <Route  path="Consultarrecursos" element ={<InterfazRecursos/>}/>
+         <Route  path="MisReservas" element ={<AdministrarU/>}/>
      </Route>
       
      </Routes>
