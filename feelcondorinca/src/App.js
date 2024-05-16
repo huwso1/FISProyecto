@@ -14,6 +14,8 @@ import AdministrarR from './Componentes/ComponentesAdmin/AdministrarR.js';
 import Afiliado from "./Componentes/Afiliado";
 import NavigateBarAfiliado from "./Componentes/NavigateBarAfiliado";
 import InterfazRecursos from './Componentes/ComponentesAfiliado/InterfazRecursos.js';
+import NavigateBarEmpleado from "./Componentes/NavigateBarEmpleado";
+import Empleado from "./Componentes/Empleado";
 
 function App() {
   return (
@@ -31,6 +33,12 @@ function App() {
 
      <Route path="/NavigateBarAfiliado" element={<NavigateBarAfiliado/>}>
          <Route index element={<Afiliado />} />
+         <Route  path="Consultarrecursos" element ={<InterfazRecursos/>}/>
+         <Route  path="MisReservas" element ={<AdministrarU/>}/>
+     </Route>
+
+     <Route path="/NavigateBarEmpleado" element={<NavigateBarEmpleado/>}>
+         <Route index element={<Empleado />} />
          <Route  path="Consultarrecursos" element ={<InterfazRecursos/>}/>
          <Route  path="MisReservas" element ={<AdministrarU/>}/>
      </Route>
