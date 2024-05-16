@@ -1,64 +1,7 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     28/04/2024 9:09:15 p.ï¿½m.                     */
+/* Created on:     14/05/2024 11:53:28 p. m.                    */
 /*==============================================================*/
-
-
-drop index USUARIO_CALIFICACION_FK;
-
-drop index RESERVA_CALIFICACION2_FK;
-
-drop index CALIFICACION_EMPLEADO_FK;
-
-drop index CALIFICACIONES_PK;
-
-drop table CALIFICACIONES;
-
-drop index UNIDAD_EMPLEADO_FK;
-
-drop index HORARIODISPONIBLE_EMPLEADO_FK;
-
-drop index EMPLEADOS_USUARIO_FK;
-
-drop index EMPLEADOS_PK;
-
-drop table EMPLEADOSSISTEMA;
-
-drop index HORARIOS_HORARIOSDISPONIBLES_FK;
-
-drop index HORARIOS_PK;
-
-drop table HORARIOS;
-
-drop index HORARIOSDISPONIBLES_PK;
-
-drop table HORARIOSDISPONIBLES;
-
-drop index UNIDAD_RECURSO_FK;
-
-drop index HORARIODISPONIBLE_RECURSO_FK;
-
-drop index RECURSOS_PK;
-
-drop table RECURSOS;
-
-drop index USUARIO_RESERVA_FK;
-
-drop index RESERVA_RECURSO_FK;
-
-drop index RESERVAS_PK;
-
-drop table RESERVAS;
-
-drop index HORARIODISPONIBLE_UNIDAD2_FK;
-
-drop index UNIDAD_PK;
-
-drop table UNIDAD;
-
-drop index USUARIOS_PK;
-
-drop table USUARIOS;
 
 /*==============================================================*/
 /* Table: CALIFICACIONES                                        */
@@ -177,7 +120,7 @@ create table HORARIOSDISPONIBLES (
    IDHORARIOSDISPONIBLES NUMERIC              not null,
    FECHAINICIO          DATE                 not null,
    FECHAFINAL           DATE                 not null,
-   ESTADOATRIBUTO       NUMERIC              null,
+   ESTADORECURSO      NUMERIC              null,
    constraint PK_HORARIOSDISPONIBLES primary key (IDHORARIOSDISPONIBLES)
 );
 
@@ -195,9 +138,8 @@ create table RECURSOS (
    IDRECURSO            NUMERIC              not null,
    IDHORARIOSDISPONIBLES NUMERIC              not null,
    IDUNIDAD             NUMERIC              not null,
-   NOMBRES              VARCHAR(100)         not null,
+   NOMBRE              VARCHAR(100)         not null,
    DESCRIPCION          VARCHAR(500)         not null,
-   ESTADO               NUMERIC              not null,
    CANTIDADVECESPRESTADO NUMERIC              null,
    constraint PK_RECURSOS primary key (IDRECURSO)
 );
@@ -259,27 +201,27 @@ IDUSUARIO
 );
 
 /*==============================================================*/
-/* Table: UNIDAD                                                */
+/* Table: UNIDADES                                              */
 /*==============================================================*/
-create table UNIDAD (
+create table UNIDADES (
    IDUNIDAD             NUMERIC              not null,
    IDHORARIOSDISPONIBLES NUMERIC              not null,
-   NOMBRES              VARCHAR(100)         not null,
+   NOMBRE              VARCHAR(100)         not null,
    INTERVALOMINIMO      NUMERIC              not null,
-   constraint PK_UNIDAD primary key (IDUNIDAD)
+   constraint PK_UNIDADES primary key (IDUNIDAD)
 );
 
 /*==============================================================*/
 /* Index: UNIDAD_PK                                             */
 /*==============================================================*/
-create unique index UNIDAD_PK on UNIDAD (
+create unique index UNIDAD_PK on UNIDADES (
 IDUNIDAD
 );
 
 /*==============================================================*/
 /* Index: HORARIODISPONIBLE_UNIDAD2_FK                          */
 /*==============================================================*/
-create  index HORARIODISPONIBLE_UNIDAD2_FK on UNIDAD (
+create  index HORARIODISPONIBLE_UNIDAD2_FK on UNIDADES (
 IDHORARIOSDISPONIBLES
 );
 
@@ -330,8 +272,8 @@ alter table EMPLEADOSSISTEMA
       on delete restrict on update restrict;
 
 alter table EMPLEADOSSISTEMA
-   add constraint FK_EMPLEADO_UNIDAD_EM_UNIDAD foreign key (IDUNIDAD)
-      references UNIDAD (IDUNIDAD)
+   add constraint FK_EMPLEADO_UNIDAD_EM_UNIDADES foreign key (IDUNIDAD)
+      references UNIDADES (IDUNIDAD)
       on delete restrict on update restrict;
 
 alter table HORARIOS
@@ -345,8 +287,8 @@ alter table RECURSOS
       on delete restrict on update restrict;
 
 alter table RECURSOS
-   add constraint FK_RECURSOS_UNIDAD_RE_UNIDAD foreign key (IDUNIDAD)
-      references UNIDAD (IDUNIDAD)
+   add constraint FK_RECURSOS_UNIDAD_RE_UNIDADES foreign key (IDUNIDAD)
+      references UNIDADES (IDUNIDAD)
       on delete restrict on update restrict;
 
 alter table RESERVAS
@@ -359,8 +301,8 @@ alter table RESERVAS
       references USUARIOS (IDUSUARIO)
       on delete restrict on update restrict;
 
-alter table UNIDAD
-   add constraint FK_UNIDAD_HORARIODI_HORARIOS foreign key (IDHORARIOSDISPONIBLES)
+alter table UNIDADES
+   add constraint FK_UNIDADES_HORARIODI_HORARIOS foreign key (IDHORARIOSDISPONIBLES)
       references HORARIOSDISPONIBLES (IDHORARIOSDISPONIBLES)
       on delete restrict on update restrict;
 
