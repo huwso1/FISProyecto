@@ -12,8 +12,7 @@ function NavigateBarEmpleado() {
             <Navbar bg="primary" variant="dark" expand="lg">
                 <Container>
                     <Nav classname="me-auto">
-                        <Navbar.Brand href="/NavigateBarAfiliado/Consultarrecursos"><img src={require("./Imagenes/iconolupa.png")} alt="icon"/>Opcion 1 Empleado</Navbar.Brand>
-                        <Navbar.Brand href="/NavigateBarAfiliado/MisReservas"><img src={require("./Imagenes/calendar (1).png")} alt="icon"/>Opcion 2 Empleado</Navbar.Brand>
+                        <Navbar.Brand href="/NavigateBarEmpleado/ConsultarReservasUnidad"><img src={require("./Imagenes/iconolupa.png")} alt="icon"/>Consultar Reservas de Unidad</Navbar.Brand>
                     </Nav>
                 </Container>
 

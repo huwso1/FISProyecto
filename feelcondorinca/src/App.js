@@ -16,7 +16,8 @@ import NavigateBarAfiliado from "./Componentes/NavigateBarAfiliado";
 import InterfazRecursos from './Componentes/ComponentesAfiliado/InterfazRecursos.js';
 import NavigateBarEmpleado from "./Componentes/NavigateBarEmpleado";
 import Empleado from "./Componentes/Empleado";
-
+import MisReservas from "./Componentes/ComponentesAfiliado/misReservas.js";
+import MisReservasEmpleado from './Componentes/ComponentesEmpleado/misReservasEmpleado.js';
 function App() {
   return (
     <BrowserRouter>
@@ -34,13 +35,13 @@ function App() {
      <Route path="/NavigateBarAfiliado" element={<NavigateBarAfiliado/>}>
          <Route index element={<Afiliado />} />
          <Route  path="Consultarrecursos" element ={<InterfazRecursos/>}/>
-         <Route  path="MisReservas" element ={<AdministrarU/>}/>
+         <Route  path="MisReservas" element ={<MisReservas/>}/>
      </Route>
 
      <Route path="/NavigateBarEmpleado" element={<NavigateBarEmpleado/>}>
          <Route index element={<Empleado />} />
          <Route  path="Consultarrecursos" element ={<InterfazRecursos/>}/>
-         <Route  path="MisReservas" element ={<AdministrarU/>}/>
+         <Route  path="ConsultarReservasUnidad" element ={<MisReservasEmpleado/>}/>
      </Route>
       
      </Routes>
