@@ -28,8 +28,11 @@ public class Recurso {
     @Column(name = "cantidadVecesPrestado")
     private int cantidadVecesPrestado;
 
+    @ManyToOne
+    @JoinColumn(name = "idHorarioDisponible")
+    private HorarioDisponible idHorariosDisponibles;
 
-    //TODO lllaves foraneas
-    private int idHorariosDisponibles;
-    private int idUnidad;
+    @ManyToOne
+    @JoinColumn(name = "idUnidad")
+    private Unidad idUnidad;
 }

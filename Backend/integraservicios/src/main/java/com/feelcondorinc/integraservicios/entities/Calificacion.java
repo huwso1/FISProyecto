@@ -32,10 +32,16 @@ public class Calificacion {
     @Column(name = "observaciones")
     private String observaciones;
 
+    @ManyToOne
+    @JoinColumn(name = "idEmpleadoCalificado", nullable = false)
+    private EmpleadosSistema empleado;
 
-    //TODO Llaves foraneas
-    private int idEmpleado;
-    private int idReserva;
-    private int idUsuario;
+    @OneToOne
+    @JoinColumn(name = "idReservaCalificada",nullable = false)
+    private Reserva reserva;
+
+    @ManyToOne
+    @JoinColumn(name = "usuarioCalificador", nullable = false)
+    private Usuario idUsuario;
 
 }

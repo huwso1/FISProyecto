@@ -22,10 +22,14 @@ public class Unidad {
     @Column(name = "nombre")
     private int nombre;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
     @Column(name = "intervaloMinimo")
     private int intervaloMinimo;
 
-    //TODO llaves foraneas
-    private int idHorariosDisponibles;
+    @OneToOne
+    @JoinColumn(name = "idHorarioDisponible")
+    private HorarioDisponible idHorariosDisponibles;
 
 }

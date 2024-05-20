@@ -22,9 +22,13 @@ public class EmpleadosSistema {
     @Column(name = "correoCorporativo")
     private String correoCorporativo;
 
-
-    //TODO llaves foraneas
-    private int idHorariosDisponibles;
-    private int idUnidad;
-    private int idUsuario;
+    @ManyToOne
+    @JoinColumn(name = "idHorarioEmpleado")
+    private HorarioDisponible idHorariosDisponibles;
+    @ManyToOne
+    @JoinColumn(name = "idUnidadAsocaciada",nullable = false)
+    private Unidad idUnidad;
+    @OneToOne
+    @JoinColumn(name = "idUsuarioEmpleado", nullable = false)
+    private Usuario idUsuario;
 }

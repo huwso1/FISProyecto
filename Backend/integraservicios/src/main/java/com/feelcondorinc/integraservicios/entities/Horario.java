@@ -13,7 +13,7 @@ import lombok.*;
 
 
 @Entity
-@Table(name = "HorariosDisponibles")
+@Table(name = "Horarios")
 public class Horario {
 
     @Id
@@ -33,6 +33,8 @@ public class Horario {
     @Column(name = "minutoFinal")
     private int minutoFinal;
 
-    //TODO llave foranea
-    private int idHorariosDisponibles;
+    @ManyToOne
+    @JoinColumn(name = "idHorarioAsignado", nullable = false)
+    private HorarioDisponible horarioDisponible;
+
 }

@@ -36,8 +36,11 @@ public class Reserva {
     @Column(name = "observaciones")
     private String observaciones;
 
+    @ManyToOne
+    @JoinColumn(name = "idRecurso", nullable = false)
+    private Recurso idRecurso;
 
-    //TODO Llaves foraneas
-    private int idRecurso;
-    private int idUsuario;
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Usuario idUsuario;
 }
