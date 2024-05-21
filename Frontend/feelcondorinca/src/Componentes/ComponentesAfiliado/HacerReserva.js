@@ -9,11 +9,15 @@ import Recursomap from '../ComponentesAdmin/Mapeo/Recursomap';
 
 
 function MenuReserva({Recursoareservar}){
+    //Linea de prueba
+    Recursoareservar.intervalo=15;
+    //Linea de prueba
     const [FechadeReserva,setFechadeReserva]=useState( inicializarfecha());
     const [EHseleccionados,setEH]=useState([]);
     const [diaseleccionado,setDiaSeleccionado]=useState(FechadeReserva.getDay());
     const[Espacioshorarios,setEspacioshorarios]=useState(["12:00","12:15","12:30","12:45","13:00"]);
     const[horarioenfecha,sethorarioenfecha]=useState();
+    const[message,setMessage]=useState("");
     
 
 useEffect(()=>{
@@ -38,6 +42,62 @@ function convertirfecha(fecha){
     var month = parseInt(dateArray[1], 10) - 1;
     var date = dateArray[2];
     return new Date(year, month, date);
+}
+function checkseleccion(intervalorecurso){
+    var interval;
+    if(intervalorecurso!=null){
+        interval=intervalorecurso;
+       
+    }
+    var anterior;
+    var correcto=true;
+    
+    if(EHseleccionados.length===0){
+        setMessage("");
+        return "";
+    }
+    else{
+        EHseleccionados.map((espacio)=>{
+           var nocolonespace=espacio.replace(":","");
+
+            
+            if(anterior==null ){
+                
+                
+            anterior=parseInt(nocolonespace.substring(2,4));
+            
+                    
+            anterior=anterior+parseInt(nocolonespace.substring(0,2))*60;
+            
+            }else{
+                if(interval==null){
+                    
+                    interval=parseInt(nocolonespace.substring(2,3));
+                    interval=interval+parseInt(nocolonespace.substring(0,2))*60 - anterior;
+                    
+                    
+                    
+                }else{
+                    var minutos=parseInt(nocolonespace.substring(2,4));
+                    minutos=minutos+parseInt(nocolonespace.substring(0,2))*60; 
+                    console.log(anterior);
+                    
+                if((minutos-anterior)!==interval & (minutos-anterior)!==interval*-1){
+                    setMessage("Debe elegir espacio en horarios consecutivos"); 
+                    
+                    correcto=false;
+                }
+                anterior=minutos;
+            }
+            }
+        })
+    }
+    if(correcto==true){
+        setMessage("");
+    }
+        
+    //Aqui se llamara a la peticion para realizar la reserva.
+    
 }
 
 function getHorariodeldia(){
@@ -88,6 +148,17 @@ return(
                 if(element.target.checked){
                     var seleccionados=EHseleccionados.slice(0);
                     seleccionados.push(element.target.value);
+                    seleccionados.sort(function(a,b){
+                    a=a.replace(":","");
+                    b=b.replace(":","");
+                    var c =parseInt(a.substring(2,4))+parseInt(a.substring(0,2))*60;
+                    console.log(c);
+                    var d=parseInt(b.substring(2,4))+parseInt(b.substring(0,2))*60;
+                    console.log(c-d);
+                    return c-d;
+                });
+                console.log(seleccionados);
+                
                     setEH(seleccionados);
                     
                 }else{
@@ -97,13 +168,15 @@ return(
                     seleccionados.splice(index,1);
                     setEH(seleccionados);
                 }
+                
             }} />);
         }) }
         </CardGroup>
         </CardBody>
         </Card>
        <p>{EHseleccionados}</p>
-       <Form.Control as="button" style={{padding:'2px 2em',backgroundColor:'#92a8d1',width:'22rem'}}>Realizar reserva</Form.Control>
+       <p>{message}</p>
+       <Form.Control as="button" style={{padding:'2px 2em',backgroundColor:'#92a8d1',width:'22rem'}} onClick={()=>{checkseleccion(Recursoareservar.intervalo)}}>Realizar reserva</Form.Control>
         </Form.Group> 
         </div>
         
