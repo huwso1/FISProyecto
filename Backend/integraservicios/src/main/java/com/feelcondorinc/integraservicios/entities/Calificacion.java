@@ -18,13 +18,16 @@ public class Calificacion {
     @Id
     @Column(name = "idCalificaion")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCalificacion;
+    private Long idCalificacion;
 
     @Column(name = "cumplimientoHorario")
     private int cumplimientoHorario;
 
     @Column(name = "calidadRecurso")
     private int calidadRecurso;
+
+    @Column(name = "estadoRecurso")
+    private int estadoRecurso;
 
     @Column(name = "tratoPersonal")
     private int tratoPersonal;
@@ -34,14 +37,14 @@ public class Calificacion {
 
     @ManyToOne
     @JoinColumn(name = "idEmpleadoCalificado", nullable = false)
-    private EmpleadosSistema empleado;
+    private EmpleadosSistema idEmpleado;
 
     @OneToOne
     @JoinColumn(name = "idReservaCalificada",nullable = false)
     private Reserva reserva;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioCalificador", nullable = false)
+    @JoinColumn(name = "idAfiliadoCalificador", nullable = false)
     private Usuario idUsuario;
 
 }

@@ -17,7 +17,7 @@ public class Unidad {
     @Id
     @Column(name = "idUnidad")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUnidad;
+    private Long idUnidad;
 
     @Column(name = "nombre")
     private int nombre;
@@ -25,11 +25,10 @@ public class Unidad {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "intervaloMinimo")
-    private int intervaloMinimo;
+    @Column(name = "intervaloMinimoPrestamo")
+    private int intervaloMinimoPrestamo;
 
     @OneToOne
     @JoinColumn(name = "idHorarioDisponible")
-    private HorarioDisponible idHorariosDisponibles;
-
+    private HorarioDisponible idHorarioDisponible;
 }

@@ -13,7 +13,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "EmpleadosSistema")
-public class EmpleadosSistema {
+public class EmpleadosSistema{
     @Id
     @Column(name = "idEmpleado")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class EmpleadosSistema {
 
     @ManyToOne
     @JoinColumn(name = "idHorarioEmpleado")
-    private HorarioDisponible idHorariosDisponibles;
+    private HorarioDisponible idHorarioDisponible;
     @ManyToOne
     @JoinColumn(name = "idUnidadAsocaciada",nullable = false)
     private Unidad idUnidad;

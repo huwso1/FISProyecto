@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReservaRepository extends CrudRepository<Reserva, Integer> {
+public interface ReservaRepository extends CrudRepository<Reserva, Long> {
 //    @Query()
 //    public List<Reserva> findAllByUnidad(int idUnidad);
 //

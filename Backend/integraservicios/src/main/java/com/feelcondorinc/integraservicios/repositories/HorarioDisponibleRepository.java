@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface HorarioDisponibleRepository extends CrudRepository<HorarioDisponible, Integer> {
+public interface HorarioDisponibleRepository extends CrudRepository<HorarioDisponible, Long> {
 }

@@ -21,11 +21,11 @@ import java.util.List;
 public class HorarioDisponible {
 
     @Id
-    @Column(name = "idHorariosDisponibles")
+    @Column(name = "idHorarioDisponible")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idHorariosDisponibles;
+    private Long idHorarioDisponible;
 
-    @Column(name = "fechaInicio")
+    @Column(name = "fechaInicial")
     private Date fechaInicio;
 
     @Column(name = "fechaFinal")

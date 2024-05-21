@@ -6,8 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmpleadosSistemaRepository extends CrudRepository<EmpleadosSistema, Integer> {
-    @Query()
-    public void guardarEmpleado();
+public interface EmpleadosSistemaRepository extends CrudRepository<EmpleadosSistema, Long> {
+    //TODO realizar la query personalizada
+//    @Query()
+//    public void guardarEmpleado();
 
 }

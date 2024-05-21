@@ -19,7 +19,7 @@ public class Horario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idHorario")
-    private int idHorario;
+    private Long idHorario;
 
     @Column(name = "horaInicial")
     private int horaInicial;
@@ -33,8 +33,11 @@ public class Horario {
     @Column(name = "minutoFinal")
     private int minutoFinal;
 
+    @Column(name = "diaSemana")
+    private String diaSemana;
+
     @ManyToOne
-    @JoinColumn(name = "idHorarioAsignado", nullable = false)
+    @JoinColumn(name = "idHorarioDisponible", nullable = false)
     private HorarioDisponible horarioDisponible;
 
 }

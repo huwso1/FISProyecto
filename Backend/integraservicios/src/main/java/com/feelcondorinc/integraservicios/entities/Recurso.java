@@ -17,7 +17,7 @@ public class Recurso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idRecurso")
-    private int idRecurso;
+    private Long idRecurso;
 
     @Column(name = "nombre")
     private String nombre;
@@ -30,7 +30,7 @@ public class Recurso {
 
     @ManyToOne
     @JoinColumn(name = "idHorarioDisponible")
-    private HorarioDisponible idHorariosDisponibles;
+    private HorarioDisponible idHorarioDisponible;
 
     @ManyToOne
     @JoinColumn(name = "idUnidad")

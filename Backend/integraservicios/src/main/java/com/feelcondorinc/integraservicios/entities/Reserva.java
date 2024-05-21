@@ -21,13 +21,22 @@ public class Reserva {
     @Id
     @Column(name = "idReserva")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idReserva;
+    private Long idReserva;
 
-    @Column(name = "fechaInicio")
-    private Date fechaInicio;
+    @Column(name = "horaInicial")
+    private int horaInicial;
 
-    @Column(name = "fechaFinal")
-    private Date fechaFinal;
+    @Column(name = "minutoInicial")
+    private int minutoInicial;
+
+    @Column(name = "horaFinal")
+    private int horaFinal;
+
+    @Column(name = "minutoFinal")
+    private int minutoFinal;
+
+    @Column(name = "fecha")
+    private Date fecha;
 
     @Column(name = "estado")
     @Enumerated(EnumType.STRING)
@@ -43,4 +52,5 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario idUsuario;
+
 }
