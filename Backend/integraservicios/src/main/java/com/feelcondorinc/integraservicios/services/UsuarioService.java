@@ -1,9 +1,6 @@
 package com.feelcondorinc.integraservicios.services;
 
-import com.feelcondorinc.integraservicios.entities.Recurso;
-import com.feelcondorinc.integraservicios.entities.Reserva;
-import com.feelcondorinc.integraservicios.entities.Unidad;
-import com.feelcondorinc.integraservicios.entities.Usuario;
+import com.feelcondorinc.integraservicios.entities.*;
 import com.feelcondorinc.integraservicios.repositories.EmpleadosSistemaRepository;
 import com.feelcondorinc.integraservicios.repositories.ReservaRepository;
 import com.feelcondorinc.integraservicios.repositories.UsuarioRepository;
@@ -21,6 +18,8 @@ public class UsuarioService {
     @Autowired
     private ReservaRepository reservaRepository;
 
+
+    // TODO logica de servicios
     //Accionar Administrador
     public void asignarRangoHorarioUnidad(){
 
@@ -30,25 +29,27 @@ public class UsuarioService {
         return null;
     }
 
-    public void crearEmpleado(Usuario empleado){
-        usuarioRepository.save(empleado);
-        empleadosSistemaRepository.guardarEmpleado();
+    //TODO se necesita query personalizada
+   public void crearEmpleado(Usuario empleado){
+//        usuarioRepository.save(empleado);
+//        empleadosSistemaRepository.guardarEmpleado();
     }
 
     public void crearAfiliado(Usuario afiliado){
         usuarioRepository.save(afiliado);
     }
 
+// TODO se necesita query personalizada
+    //Accionar Empleado
+    public List<Reserva> consultarReservasEnUnidad (Unidad unidad){
+////        return reservaRepository.findAllByUnidad(unidad.getIdUnidad());
+        return null;
+    }
 
-
-//    //Accionar Empleado
-//    public List<Reserva> consultarReservasEnUnidad (Unidad unidad){
-//        return reservaRepository.findAllByUnidad(unidad.getIdUnidad());
-//    }
-//
-//    public List<Reserva> consultarReservasEnRecurso(Recurso recurso){
-//        return reservaRepository.findAllByRecurso(recurso.getIdRecurso());
-//    }
+    public List<Reserva> consultarReservasEnRecurso(Recurso recurso){
+////        return reservaRepository.findAllByRecurso(recurso.getIdRecurso());
+        return  null;
+    }
 
     public void registrarPrestamo(Reserva reserva){
 
@@ -57,13 +58,27 @@ public class UsuarioService {
     public void devolverRecurso(Reserva reserva){
 
     }
-
-
-
-    //Accionar Empleado
+//
+//
+//
+//    //Accionar Empleado
     public void reservarRecurso(Reserva reserva){
         reservaRepository.save(reserva);
     }
 
-    //TODO public void reservarRecursoRepetitivo(Reserva reserva)
+    //Accionar Afiliado
+    public void reservarRecursoRepetitivo(Reserva reserva){
+
+    }
+
+    public List<Reserva> consultarReservasActivas(Usuario usuario){
+        return null;
+    }
+    public List<Reserva> cancelarReservasActivas(List<Reserva> reservas){
+        return null;
+    }
+
+    public Calificacion calificarServicio(Calificacion calificacion){
+        return null;
+    }
 }
