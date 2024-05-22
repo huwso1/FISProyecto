@@ -17,7 +17,7 @@ public class EmpleadosSistema{
     @Id
     @Column(name = "idEmpleado")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEmpleado;
+    private Long idEmpleado;
 
     @Column(name = "correoCorporativo")
     private String correoCorporativo;

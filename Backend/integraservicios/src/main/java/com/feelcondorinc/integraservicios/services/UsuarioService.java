@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class UsuarioService {
@@ -79,6 +81,21 @@ public class UsuarioService {
     }
 
     public Calificacion calificarServicio(Calificacion calificacion){
+        return null;
+    }
+
+
+    public Usuario Login(Usuario usuario){
+        
+        Optional<Usuario> usuariologeado=usuarioRepository.findById(usuario.getIdUsuario());
+        System.out.println(usuariologeado.isPresent());
+
+        if(usuariologeado.isPresent()){
+            if(usuariologeado.get().getContrasenia().equals(usuario.getContrasenia())){
+            return usuariologeado.get();
+        }
+        }
+
         return null;
     }
 }

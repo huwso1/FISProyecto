@@ -14,7 +14,7 @@
 	<name>integraservicios</name>
 	<description>Proyecto de prestamo de recursos en unidades universitarias</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -47,6 +47,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+	<dependency>
+  	  <groupId>org.json</groupId>
+    	<artifactId>json</artifactId>
+    	<version>20240303</version>
+</dependency>
 	</dependencies>
 
 	<build>
