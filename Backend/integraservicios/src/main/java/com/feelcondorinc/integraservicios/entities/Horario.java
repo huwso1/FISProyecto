@@ -1,5 +1,7 @@
 package com.feelcondorinc.integraservicios.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,7 +37,7 @@ public class Horario {
 
     @Column(name = "diaSemana")
     private String diaSemana;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idHorarioDisponible", nullable = false)
     private HorarioDisponible horarioDisponible;
