@@ -25,13 +25,15 @@ public class HorarioDisponible {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHorarioDisponible;
 
-    @Column(name = "fechaInicial")
+    @Column(name = "fechaInicial",nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date fechaInicio;
 
     @Column(name = "fechaFinal")
+    @Temporal(TemporalType.DATE)
     private Date fechaFinal;
 
-    @Column(name = "estadoRecurso")
+    @Column(name = "estadoRecurso" , nullable = false)
     @Enumerated(EnumType.STRING)
     private EstadoRecurso estadoRecurso;
 

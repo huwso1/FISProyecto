@@ -21,23 +21,23 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
-    @Column(name = "contrasenia")
+    @Column(name = "contrasenia", length=10)
     private String contrasenia;
 
-    @Column(name = "rolUsuario")
+    @Column(name = "rolUsuario", length=8)
     @Enumerated(EnumType.STRING)
     private RolUsuario rolUsuario;
 
-    @Column(name = "nombres")
+    @Column(name = "nombres", length=20)
     private String nombres;
 
-    @Column(name = "apellidos")
+    @Column(name = "apellidos" , length=20)
     private String apellidos;
 
-    @Column(name = "numIdentificacion")
+    @Column(name = "numIdentificacion", length=15)
     private String numIdentificacion;
 
-    @Column(name = "numContacto")
+    @Column(name = "numContacto", length=10)
     private String numContacto;
 
 }

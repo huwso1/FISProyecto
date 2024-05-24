@@ -1,8 +1,10 @@
 package com.feelcondorinc.integraservicios.services;
 
+import com.POJOS.UNIDADPOJO;
 import com.feelcondorinc.integraservicios.entities.*;
 import com.feelcondorinc.integraservicios.repositories.EmpleadosSistemaRepository;
 import com.feelcondorinc.integraservicios.repositories.ReservaRepository;
+import com.feelcondorinc.integraservicios.repositories.UnidadRepository;
 import com.feelcondorinc.integraservicios.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class UsuarioService {
     private EmpleadosSistemaRepository empleadosSistemaRepository;
     @Autowired
     private ReservaRepository reservaRepository;
-
+   
 
     // TODO logica de servicios
     //Accionar Administrador
@@ -98,4 +100,6 @@ public class UsuarioService {
 
         return null;
     }
+
+    
 }

@@ -36,6 +36,7 @@ public class Reserva {
     private int minutoFinal;
 
     @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
     private Date fecha;
 
     @Column(name = "estado")

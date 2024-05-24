@@ -33,16 +33,18 @@ public ResponseEntity BananaLogin(@RequestBody Usuario USUARIO) {
     System.out.println(USUARIO.getContrasenia());
     System.out.println(USUARIO.getApellidos());
     Usuario usuariologeado=usuarioservice.Login(USUARIO);
+    JSONObject mensaje=new JSONObject();
     if(usuariologeado!=null){
-        JSONObject mensaje=new JSONObject();
+        
+        mensaje.put("message","Login exitoso");
         mensaje.put("rol",usuariologeado.getRolUsuario());
         mensaje.put("nombre",usuariologeado.getNombres());
         mensaje.put("apellido",usuariologeado.getApellidos());
         return new ResponseEntity(mensaje.toString(),HttpStatus.OK);
     }
-
+        mensaje.put("message","Usuario o contraseña incorrectos");
     
-    return new ResponseEntity("Usuario incorrecto",HttpStatus.BAD_REQUEST);
+    return new ResponseEntity(mensaje.toString(),HttpStatus.BAD_REQUEST);
 }
 
 
