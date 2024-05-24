@@ -43,14 +43,14 @@ public ResponseEntity crearUnidad(@RequestBody UNIDADPOJO Unidad){
 
 @PostMapping(value="/CrearRecurso")
 public ResponseEntity crearRecurso(@RequestBody RECURSOPOJO Recurso){
-    System.out.println(Recurso.getSabadoi());
-    /*String hola=adminservice.crearUnidad(Unidad);
+    
+    String hola=adminservice.crearRecurso(Recurso);
     JSONObject respuesta=new JSONObject();
     respuesta.put("message",hola);
     if(hola==null){
         return new ResponseEntity(respuesta.toString(),HttpStatus.OK);
     }
-    */
+    
     
     return new ResponseEntity("banana",HttpStatus.BAD_REQUEST);
 

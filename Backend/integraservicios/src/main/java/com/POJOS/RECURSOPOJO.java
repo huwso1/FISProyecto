@@ -18,11 +18,15 @@ private String Viernesf;
 private String Sabadoi;
 private String Sabadof;
 
+private String idUnidad;
 private String intervalominimo;
 
+public String getIntervalominimo() {
+    return intervalominimo;
+}
 @JsonCreator
 public RECURSOPOJO(String Nombre, String Lunesi, String Lunesf, String Martesi, String Martesf, String Miercolesi,
-        String Miercolesf, String Juevesi, String Juevesf, String Viernesi, String Viernesf,String Sabadosi,String Sabadosf,String intervalominimo) {
+        String Miercolesf, String Juevesi, String Juevesf, String Viernesi, String Viernesf,String Sabadosi,String Sabadosf,String idUnidad,String intervalominimo) {
     this.Nombre = Nombre;
     this.Lunesi = Lunesi;
     this.Lunesf = Lunesf;
@@ -36,6 +40,7 @@ public RECURSOPOJO(String Nombre, String Lunesi, String Lunesf, String Martesi, 
     this.Viernesf = Viernesf;
     this.Sabadoi=Sabadosi;
     this.Sabadof=Sabadosf;
+    this.idUnidad=idUnidad;
     this.intervalominimo=intervalominimo;
 }
 public String getNombre() {
@@ -105,12 +110,7 @@ public void setViernesf(String viernesf) {
     Viernesf = viernesf;
 }
 
-public String getIntervalominimo() {
-    return intervalominimo;
-}
-public void setIntervalominimo(String intervalominimo) {
-    this.intervalominimo = intervalominimo;
-}
+
 public String getSabadoi() {
     return Sabadoi;
 }
@@ -122,5 +122,11 @@ public String getSabadof() {
 }
 public void setSabadof(String sabadof) {
     Sabadof = sabadof;
+}
+public String getIdUnidad() {
+    return idUnidad;
+}
+public void setIdUnidad(String idUnidad) {
+    this.idUnidad = idUnidad;
 }
 }

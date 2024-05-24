@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -437,13 +438,19 @@ public class AdminService {
                     return e.getMessage();
                 }
             }
-            /* 
+            
             Recurso nuevaRecurso=new Recurso();
             nuevaRecurso.setNombre(Recurso.getNombre());
             nuevaRecurso.setIdHorarioDisponible(conjuntohorario);
-            nuevaRecurso.setIntervaloMinimoPrestamo(Integer.valueOf(Recurso.getIntervalominimo()));
-            RecursoRepository.save(nuevaRecurso);
-            */
+            Optional<Unidad> unidadpadre;
+            try{
+                unidadpadre=unidadRepository.findById(Long.valueOf(Recurso.getIdUnidad()));
+            }catch(Exception e){
+                return e.getMessage();
+            }
+            nuevaRecurso.setIdUnidad(unidadpadre.get());
+            recursorepository.save(nuevaRecurso);
+            
         }
         
         return null;
