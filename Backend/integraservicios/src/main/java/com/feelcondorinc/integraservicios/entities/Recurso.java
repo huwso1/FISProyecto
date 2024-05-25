@@ -31,6 +31,8 @@ public class Recurso {
     @ManyToOne
     @JoinColumn(name = "idHorarioDisponible")
     private HorarioDisponible idHorarioDisponible;
+    @Transient
+    private int cantidaddereservas;
 
     @ManyToOne
     @JoinColumn(name = "idUnidad")

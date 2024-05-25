@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.feelcondorinc.integraservicios.repositories.UnidadRepository;
+import com.POJOS.EMPLEADOPOJO;
 import com.POJOS.RECURSOPOJO;
 import com.POJOS.UNIDADPOJO;
 import com.feelcondorinc.integraservicios.entities.*;
 import com.feelcondorinc.integraservicios.entities.models.EstadoRecurso;
+import com.feelcondorinc.integraservicios.entities.models.RolUsuario;
 import com.feelcondorinc.integraservicios.repositories.EmpleadosSistemaRepository;
 import com.feelcondorinc.integraservicios.repositories.HorarioDisponibleRepository;
 import com.feelcondorinc.integraservicios.repositories.HorarioRepository;
@@ -36,14 +38,25 @@ public class AdminService {
     @Autowired
     private HorarioDisponibleRepository horarioDisponibleRepository;
     @Autowired 
-    RecursoRepository recursorepository;
+    private RecursoRepository recursorepository;
+    @Autowired 
+    private EmpleadosSistemaRepository empleadosistemarepository;
+    @Autowired 
+    private UsuarioRepository usuariorepository;
+    @Autowired 
+     private ReservaRepository reservaRepository;
+
 
     public AdminService(UnidadRepository unidadRepository, HorarioRepository horarioRepository,
-            HorarioDisponibleRepository horarioDisponibleRepository,RecursoRepository recursorepository) {
+            HorarioDisponibleRepository horarioDisponibleRepository,RecursoRepository recursorepository,ReservaRepository reservaRepository,
+            EmpleadosSistemaRepository empleadosistemarepository,UsuarioRepository usuarioRepository) {
         this.unidadRepository = unidadRepository;
         this.horarioRepository = horarioRepository;
         this.horarioDisponibleRepository = horarioDisponibleRepository;
         this.recursorepository = recursorepository;
+        this.reservaRepository=reservaRepository;
+        this.empleadosistemarepository=empleadosistemarepository;
+        this.usuariorepository=usuarioRepository;
     }
 
     public String crearUnidad(UNIDADPOJO unidad){
@@ -460,11 +473,121 @@ public class AdminService {
     public ArrayList<Unidad> consultarUnidades(){
       Iterator<Unidad> unidades=  unidadRepository.findAll().iterator();
       ArrayList<Unidad> listaunidades=new ArrayList<Unidad>();
+      
+        
       while(unidades.hasNext()){
-        listaunidades.add(unidades.next());
+        Unidad unidad=unidades.next();
+        unidad.setCantidaddereservas(reservaRepository.cantidadReservas(unidad.getIdUnidad()).size());
+        listaunidades.add(unidad);
       }
       return listaunidades;
     }
+    public List<Recurso> consultarRecursoPorUnidad(String idUnidad){
+        Optional<Unidad> Referencia=unidadRepository.findById(Long.valueOf(idUnidad));
+        List<Recurso> listarecursos;
+        try{
+         listarecursos=recursorepository.findByIdUnidad(Referencia.get());
+        }catch(Exception e){
+            return null;
+        }
+          
+        for(int i=0;i<listarecursos.size();i++){
+          
+          listarecursos.get(i).setCantidaddereservas(reservaRepository.cantidadReservasRecurso(listarecursos.get(i).getIdRecurso()).size());
+          
+        }
+        
+        return listarecursos;
+      }
 
+    public String crearEmpleado(EMPLEADOPOJO empleado){
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("HH:MM");
+        Date today=new Date();
+        HorarioDisponible conjuntohorario=new HorarioDisponible();
+        conjuntohorario.setFechaInicio(today);
+        conjuntohorario.setEstadoRecurso(EstadoRecurso.DISPONIBLE);
+        Optional<Unidad> UnidadDeEmpleado=unidadRepository.findById(Long.valueOf(empleado.getIdUnidad()));
+        try{
+            conjuntohorario=horarioDisponibleRepository.save(conjuntohorario);
+            
+            }catch(Exception e){
+              return e.getMessage();
+            }
+        Usuario nuevoempleado=new Usuario();
+        nuevoempleado.setNombres(empleado.getNombre());
+        nuevoempleado.setApellidos(empleado.getApellido());
+        nuevoempleado.setContrasenia(empleado.getNombre().toUpperCase().charAt(0)+empleado.getApellido().toLowerCase()+empleado.getDocumento().substring(0,2));
+        nuevoempleado.setIdUsuario(Long.valueOf(empleado.getDocumento()));
+        nuevoempleado.setRolUsuario(RolUsuario.EMPLEADO);
+        nuevoempleado.setNumContacto(empleado.getTelefono());
+        nuevoempleado.setNumIdentificacion(empleado.getDocumento());
+        EmpleadosSistema nuevoempleadosistema=new EmpleadosSistema();
+        nuevoempleadosistema.setCorreoCorporativo(empleado.getNombre().toUpperCase().charAt(0)+empleado.getApellido().toLowerCase()+"@gmail.com");
+        nuevoempleadosistema.setIdUsuario(nuevoempleado);
+        nuevoempleadosistema.setIdHorarioDisponible(conjuntohorario);
+        try{
+            nuevoempleadosistema.setIdUnidad(UnidadDeEmpleado.get());
+        }catch(Exception e){
+            return e.getMessage();
+        }
+        Horario Lunes=new Horario();
+        Lunes.setDiaSemana("LUNES");
+        Lunes.setHoraInicial(Integer.valueOf(empleado.getLunesi().substring(0,1)));
+        Lunes.setMinutoInicial(Integer.valueOf(empleado.getLunesi().substring(3,4)));
+        Lunes.setHoraFinal(Integer.valueOf(empleado.getLunesf().substring(0,1)));
+        Lunes.setMinutoFinal(Integer.valueOf(empleado.getLunesf().substring(3,4)));
+        Lunes.setHorarioDisponible(conjuntohorario);
+        Horario Martes=new Horario();
+        Martes.setDiaSemana("Martes");
+        Martes.setHoraInicial(Integer.valueOf(empleado.getMartesi().substring(0,1)));
+        Martes.setMinutoInicial(Integer.valueOf(empleado.getMartesi().substring(3,4)));
+        Martes.setHoraFinal(Integer.valueOf(empleado.getMartesf().substring(0,1)));
+        Martes.setMinutoFinal(Integer.valueOf(empleado.getMartesf().substring(3,4)));
+        Martes.setHorarioDisponible(conjuntohorario);
+        Horario Miercoles=new Horario();
+        Miercoles.setDiaSemana("Miercoles");
+        Miercoles.setHoraInicial(Integer.valueOf(empleado.getMiercolesi().substring(0,1)));
+        Miercoles.setMinutoInicial(Integer.valueOf(empleado.getMiercolesi().substring(3,4)));
+        Miercoles.setHoraFinal(Integer.valueOf(empleado.getMiercolesf().substring(0,1)));
+        Miercoles.setMinutoFinal(Integer.valueOf(empleado.getMiercolesf().substring(3,4)));
+        Miercoles.setHorarioDisponible(conjuntohorario);
+        Horario Jueves=new Horario();
+        Jueves.setDiaSemana("Jueves");
+        Jueves.setHoraInicial(Integer.valueOf(empleado.getJuevesi().substring(0,1)));
+        Jueves.setMinutoInicial(Integer.valueOf(empleado.getJuevesi().substring(3,4)));
+        Jueves.setHoraFinal(Integer.valueOf(empleado.getJuevesf().substring(0,1)));
+        Jueves.setMinutoFinal(Integer.valueOf(empleado.getJuevesf().substring(3,4)));
+        Jueves.setHorarioDisponible(conjuntohorario);
+        Horario Viernes=new Horario();
+        Viernes.setDiaSemana("Viernes");
+        Viernes.setHoraInicial(Integer.valueOf(empleado.getViernesi().substring(0,1)));
+        Viernes.setMinutoInicial(Integer.valueOf(empleado.getViernesi().substring(3,4)));
+        Viernes.setHoraFinal(Integer.valueOf(empleado.getViernesf().substring(0,1)));
+        Viernes.setMinutoFinal(Integer.valueOf(empleado.getViernesf().substring(3,4)));
+        Viernes.setHorarioDisponible(conjuntohorario);
+        Horario Sabado=new Horario();
+        Sabado.setDiaSemana("Sabado");
+        Sabado.setHoraInicial(Integer.valueOf(empleado.getSabadoi().substring(0,1)));
+        Sabado.setMinutoInicial(Integer.valueOf(empleado.getSabadoi().substring(3,4)));
+        Sabado.setHoraFinal(Integer.valueOf(empleado.getSabadof().substring(0,1)));
+        Sabado.setMinutoFinal(Integer.valueOf(empleado.getSabadof().substring(3,4)));
+        Sabado.setHorarioDisponible(conjuntohorario);
+        try{
+            horarioRepository.save(Lunes);
+            horarioRepository.save(Martes);
+            horarioRepository.save(Miercoles);
+            horarioRepository.save(Jueves);
+            horarioRepository.save(Viernes);
+            horarioRepository.save(Sabado);
+            usuariorepository.save(nuevoempleado);
+            empleadosistemarepository.save(nuevoempleadosistema);
+        }catch(Exception e){
+            return e.getMessage();
+        }
+        
+        
+            
+        return null;
+    }
 
 }

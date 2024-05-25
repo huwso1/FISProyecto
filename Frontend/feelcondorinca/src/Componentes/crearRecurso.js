@@ -26,10 +26,8 @@ const [Sabadosf,SetSabadosf]=useState("");
 const [message,SetMessage]=useState("");
 const [unidad,SetUnidad]=useState('');
 const [unidades,SetUnidades]=useState([new Unidadmap(1,"Homicidios"),new Unidadmap(2,"Laboratorios"),new Unidadmap(3,"Documentales Holman")]);
+const [isModifying,SetModifying]=useState(false);
 
-if(idrecurso!=null){
-  //Aqui se realizara la peticion al back
-};
 
 function minhour(Horainicial,horaFinal){
     var index=0;
@@ -65,123 +63,19 @@ var peticionUnidades = () => {
 
 useEffect(() => {
   const fetchData = async () => {
+    if(idrecurso!=null){
+      //Aqui se realizara la peticion al back
+    }else{
       try {
           // Esperamos la resolución de la promesa usando await
           const data = await peticionUnidades();
           // Una vez que la promesa se resuelve, actualizamos el estado con los datos recibidos
           
-          var listaud=[];
+          
+          parseUnidad(data);
 
-          data.map((unidad)=>{
-           var li;
-           var lf;
-           var mi;
-           var mf;
-           var mii;
-           var mif;
-           var ji;
-           var jf;
-           var vi;
-           var vf;
-           var si;
-           var sf;
-           
-            unidad.idHorarioDisponible.horarios.map((horario,index,elements)=>{
-              if(li==null && horario.diaSemana==="LUNES"){
-                  if((horario.horaInicial+"").length<2){
-               li= "0"+horario.horaInicial+":00"
-              }else{
-                li= horario.horaInicial+":00"
-              }
-
-              }
-              if(lf==null && elements.at(index+1).diaSemana==="MARTES"){
-                if((horario.horaFinal+"").length<2){
-                  lf= "0"+horario.horaFinal+":00"
-                 }else{
-                   lf= horario.horaFinal+":00"
-                 }
-              }
-              if(mi==null && horario.diaSemana==="MARTES"){
-                if((horario.horaInicial+"").length<2){
-             mi= "0"+horario.horaInicial+":00"
-            }else{
-              mi= horario.horaInicial+":00"
-            }
-
-            }
-            if(mf==null && elements.at(index+1).diaSemana==="MIERCOLES"){
-              if((horario.horaFinal+"").length<2){
-                mf= "0"+horario.horaFinal+":00"
-               }else{
-                 mf= horario.horaFinal+":00"
-               }
-            }
-            if(mii==null && horario.diaSemana==="MIERCOLES"){
-              if((horario.horaInicial+"").length<2){
-           mii= "0"+horario.horaInicial+":00"
-          }else{
-            mii= horario.horaInicial+":00"
-          }
-
-          }
-          if(mif==null && elements.at(index+1).diaSemana==="JUEVES"){
-            if((horario.horaFinal+"").length<2){
-              mif= "0"+horario.horaFinal+":00"
-             }else{
-               mif= horario.horaFinal+":00"
-             }
-          }
-          if(ji==null && horario.diaSemana==="JUEVES"){
-            if((horario.horaInicial+"").length<2){
-         ji= "0"+horario.horaInicial+":00"
-        }else{
-          ji= horario.horaInicial+":00"
-        }
-
-        }
-        if(jf==null && elements.at(index+1).diaSemana==="VIERNES"){
-          if((horario.horaFinal+"").length<2){
-            jf= "0"+horario.horaFinal+":00"
-           }else{
-             jf= horario.horaFinal+":00"
-           }
-        }
-        if(vi==null && horario.diaSemana==="VIERNES"){
-          if((horario.horaInicial+"").length<2){
-       vi= "0"+horario.horaInicial+":00"
-      }else{
-        vi= horario.horaInicial+":00"
-      }
-
-      }
-      if(vf==null && elements.at(index+1).diaSemana==="SABADO"){
-        if((horario.horaFinal+"").length<2){
-          vf= "0"+horario.horaFinal+":00"
-         }else{
-           vf= horario.horaFinal+":00"
-         }
-      }
-      if(si==null && horario.diaSemana==="SABADO"){
-        if((horario.horaInicial+"").length<2){
-     si= "0"+horario.horaInicial+":00"
-    }else{
-      si= horario.horaInicial+":00"
-    }
-
-    }
-    if(sf==null && elements.length-1==index){
-      if((horario.horaFinal+"").length<2){
-        sf= "0"+horario.horaFinal+":00"
-       }else{
-         sf= horario.horaFinal+":00"
-       }
-    }
-            })
-            
-            listaud.push(new Unidadmap(unidad.idUnidad,unidad.nombre,null,li,lf,mi,mf,mii,mif,ji,jf,vi,vf,si,sf,unidad.intervaloMinimoPrestamo));
-          }) 
-          SetUnidades(listaud);
+          
+          
           // Aquí puedes ver los datos en la consola
       } catch (error) {
           // Manejamos cualquier error que pueda ocurrir
@@ -192,11 +86,123 @@ useEffect(() => {
           console.error('Error al obtener los datos:', error);
       }
   };
-
+}
   fetchData();
 }, []);
 
+function parseUnidad(data){
+var listaud=[];
+  data.map((unidad)=>{
+    var li;
+    var lf;
+    var mi;
+    var mf;
+    var mii;
+    var mif;
+    var ji;
+    var jf;
+    var vi;
+    var vf;
+    var si;
+    var sf;
+    
+     unidad.idHorarioDisponible.horarios.map((horario,index,elements)=>{
+       if(li==null && horario.diaSemana==="LUNES"){
+           if((horario.horaInicial+"").length<2){
+        li= "0"+horario.horaInicial+":00"
+       }else{
+         li= horario.horaInicial+":00"
+       }
 
+       }
+       if(lf==null && elements.at(index+1).diaSemana==="MARTES"){
+         if((horario.horaFinal+"").length<2){
+           lf= "0"+horario.horaFinal+":00"
+          }else{
+            lf= horario.horaFinal+":00"
+          }
+       }
+       if(mi==null && horario.diaSemana==="MARTES"){
+         if((horario.horaInicial+"").length<2){
+      mi= "0"+horario.horaInicial+":00"
+     }else{
+       mi= horario.horaInicial+":00"
+     }
+
+     }
+     if(mf==null && elements.at(index+1).diaSemana==="MIERCOLES"){
+       if((horario.horaFinal+"").length<2){
+         mf= "0"+horario.horaFinal+":00"
+        }else{
+          mf= horario.horaFinal+":00"
+        }
+     }
+     if(mii==null && horario.diaSemana==="MIERCOLES"){
+       if((horario.horaInicial+"").length<2){
+    mii= "0"+horario.horaInicial+":00"
+   }else{
+     mii= horario.horaInicial+":00"
+   }
+
+   }
+   if(mif==null && elements.at(index+1).diaSemana==="JUEVES"){
+     if((horario.horaFinal+"").length<2){
+       mif= "0"+horario.horaFinal+":00"
+      }else{
+        mif= horario.horaFinal+":00"
+      }
+   }
+   if(ji==null && horario.diaSemana==="JUEVES"){
+     if((horario.horaInicial+"").length<2){
+  ji= "0"+horario.horaInicial+":00"
+ }else{
+   ji= horario.horaInicial+":00"
+ }
+
+ }
+ if(jf==null && elements.at(index+1).diaSemana==="VIERNES"){
+   if((horario.horaFinal+"").length<2){
+     jf= "0"+horario.horaFinal+":00"
+    }else{
+      jf= horario.horaFinal+":00"
+    }
+ }
+ if(vi==null && horario.diaSemana==="VIERNES"){
+   if((horario.horaInicial+"").length<2){
+vi= "0"+horario.horaInicial+":00"
+}else{
+ vi= horario.horaInicial+":00"
+}
+
+}
+if(vf==null && elements.at(index+1).diaSemana==="SABADO"){
+ if((horario.horaFinal+"").length<2){
+   vf= "0"+horario.horaFinal+":00"
+  }else{
+    vf= horario.horaFinal+":00"
+  }
+}
+if(si==null && horario.diaSemana==="SABADO"){
+ if((horario.horaInicial+"").length<2){
+si= "0"+horario.horaInicial+":00"
+}else{
+si= horario.horaInicial+":00"
+}
+
+}
+if(sf==null && elements.length-1==index){
+if((horario.horaFinal+"").length<2){
+ sf= "0"+horario.horaFinal+":00"
+}else{
+  sf= horario.horaFinal+":00"
+}
+}
+     })
+     
+     listaud.push(new Unidadmap(unidad.idUnidad,unidad.nombre,null,li,lf,mi,mf,mii,mif,ji,jf,vi,vf,si,sf,unidad.intervaloMinimoPrestamo));
+   }) 
+   SetUnidades(listaud);
+}
 const crearRecursoP=(element)=>{
   element.preventDefault();
   if(  Nombre!=="" && Nombre!=null){

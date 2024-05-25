@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.POJOS.EMPLEADOPOJO;
 import com.POJOS.RECURSOPOJO;
 import com.POJOS.UNIDADPOJO;
+import com.feelcondorinc.integraservicios.entities.Recurso;
 import com.feelcondorinc.integraservicios.entities.Unidad;
 import com.feelcondorinc.integraservicios.services.AdminService;
 import com.feelcondorinc.integraservicios.services.UsuarioService;
@@ -61,6 +63,32 @@ public ResponseEntity<List<Unidad>> consultarUnidades(@RequestBody String body){
     List<Unidad> Listaunidades=adminservice.consultarUnidades();
     if(Listaunidades!=null){
         return new ResponseEntity(Listaunidades,HttpStatus.OK);  
+    }
+    
+    return new ResponseEntity("{ \"message\":\"salio mal\"}",HttpStatus.BAD_REQUEST);
+
+}
+
+@PostMapping(value="/CrearEmpleado")
+public ResponseEntity crearEmpleado(@RequestBody EMPLEADOPOJO Empleado){
+    
+    String mensaje=adminservice.crearEmpleado(Empleado);
+    if(mensaje==null){
+        
+        return new ResponseEntity(mensaje,HttpStatus.OK);  
+    }
+    JSONObject message=new JSONObject();
+        message.put("message",mensaje);
+    return new ResponseEntity(message.toString(),HttpStatus.BAD_REQUEST);
+
+}
+
+@PostMapping(value="/Recursos")
+public ResponseEntity<List<Unidad>> consultarRecursos(@RequestBody String body){
+    JSONObject request=new JSONObject(body);
+    List<Recurso> Listarecursos=adminservice.consultarRecursoPorUnidad(request.getString("idUnidad"));
+    if(Listarecursos!=null){
+        return new ResponseEntity(Listarecursos,HttpStatus.OK);  
     }
     
     return new ResponseEntity("{ \"message\":\"salio mal\"}",HttpStatus.BAD_REQUEST);

@@ -28,6 +28,9 @@ public class Unidad {
     @Column(name = "intervaloMinimoPrestamo")
     private int intervaloMinimoPrestamo;
 
+    @Transient
+    private int cantidaddereservas;
+    
     @OneToOne
     @JoinColumn(name = "idHorarioDisponible")
     private HorarioDisponible idHorarioDisponible;
