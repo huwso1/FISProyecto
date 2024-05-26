@@ -1,10 +1,12 @@
-class Unidadmap{
+class Empleadomap{
 
-    constructor(id,nombre,cantidaddereservas,horariolunesi,horariolunesf,horariomartesi,horariomartesf,horariomiercolesi,horariomiercolesf
-        ,horariojuevesi,horariojuevesf,horarioviernesi,horarioviernesf,horariosabadoi,horariosabadof,intervalo,descripcion){
+    constructor(id,nombre,apellido,correo,Unidad,horariolunesi,horariolunesf,horariomartesi,horariomartesf,horariomiercolesi,horariomiercolesf
+        ,horariojuevesi,horariojuevesf,horarioviernesi,horarioviernesf,horariosabadoi,horariosabadof){
         this.id=id;
         this.nombre=nombre;
-        this.cantidaddereservas=cantidaddereservas;
+        this.apellido=apellido;
+        this.correo=correo;
+        this.Unidad=Unidad;
         this.horariolunesi=horariolunesi;
         this.horariolunesf=horariolunesf;
         this.horariomartesi=horariomartesi;
@@ -17,11 +19,10 @@ class Unidadmap{
         this.horarioviernesf=horarioviernesf;
         this.horariosabadoi=horariosabadoi;
         this.horariosabadof=horariosabadof;
-        this.intervalo=intervalo;
-        this.descripcion=descripcion;
+        
 
     }
     
     
 }
-export default Unidadmap;
+export default Empleadomap;

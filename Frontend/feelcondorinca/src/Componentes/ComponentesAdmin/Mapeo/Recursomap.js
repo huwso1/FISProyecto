@@ -1,7 +1,7 @@
 class Unidadmap{
 
     constructor(id,nombre,cantidaddereservas,Unidad,horariolunesi,horariolunesf,horariomartesi,horariomartesf,horariomiercolesi,horariomiercolesf
-        ,horariojuevesi,horariojuevesf,horarioviernesi,horarioviernesf,horariosabadoi,horariosabadof,intervalo){
+        ,horariojuevesi,horariojuevesf,horarioviernesi,horarioviernesf,horariosabadoi,horariosabadof,intervalo,descripcion){
         this.id=id;
         this.nombre=nombre;
         this.Unidad=Unidad;
@@ -19,6 +19,7 @@ class Unidadmap{
         this.horariosabadoi=horariosabadoi;
         this.horariosabadof=horariosabadof;
         this.intervalo=intervalo;
+        this.descripcion=descripcion;
 
     }
     

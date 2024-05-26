@@ -304,7 +304,7 @@ var peticionUnidades = () => {
         }
              })
              
-             listaud.push(new Recursomap(unidad.id,unidad.nombre,unidad.cantidaddereservas,unidad.idUnidad.idUnidad,li,lf,mi,mf,mii,mif,ji,jf,vi,vf,si,sf));
+             listaud.push(new Recursomap(unidad.idRecurso,unidad.nombre,unidad.cantidaddereservas,unidad.idUnidad.idUnidad,li,lf,mi,mf,mii,mif,ji,jf,vi,vf,si,sf));
            }) 
            console.log(listaud);
            setRecursos(listaud);

@@ -9,6 +9,7 @@ import '../css/Unidad.css';
 
 function Listarecursos({recursos,handlerrecurso,unidad}){
 const handlerlista=(nombreM,idrecurso)=>{
+    console.log(idrecurso);
     handlerrecurso(nombreM,idrecurso);
 }
 var rows=0;

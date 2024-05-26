@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class UNIDADPOJO {
 
+private String idUnidad;
 private String Nombre;
 private String Lunesi;
 private String Lunesf;
@@ -17,12 +18,13 @@ private String Viernesi;
 private String Viernesf;
 private String Sabadoi;
 private String Sabadof;
-
+private String descripcion;
 private String intervalominimo;
 
 @JsonCreator
 public UNIDADPOJO(String Nombre, String Lunesi, String Lunesf, String Martesi, String Martesf, String Miercolesi,
-        String Miercolesf, String Juevesi, String Juevesf, String Viernesi, String Viernesf,String Sabadosi,String Sabadosf,String intervalominimo) {
+        String Miercolesf, String Juevesi, String Juevesf, String Viernesi, String Viernesf,String Sabadosi,String Sabadosf,String intervalominimo,String descripcion,
+        String idUnidad) {
     this.Nombre = Nombre;
     this.Lunesi = Lunesi;
     this.Lunesf = Lunesf;
@@ -37,6 +39,21 @@ public UNIDADPOJO(String Nombre, String Lunesi, String Lunesf, String Martesi, S
     this.Sabadoi=Sabadosi;
     this.Sabadof=Sabadosf;
     this.intervalominimo=intervalominimo;
+    this.descripcion=descripcion;
+    this.idUnidad=idUnidad;
+}
+
+public String getIdUnidad() {
+    return idUnidad;
+}
+public void setIdUnidad(String idUnidad) {
+    this.idUnidad = idUnidad;
+}
+public String getDescripcion() {
+    return descripcion;
+}
+public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
 }
 public String getNombre() {
     return Nombre;
