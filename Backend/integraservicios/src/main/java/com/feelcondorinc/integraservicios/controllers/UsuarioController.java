@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.POJOS.AfiliadoPOJO;
 import com.feelcondorinc.integraservicios.entities.Usuario;
 import com.feelcondorinc.integraservicios.services.UsuarioService;
 
@@ -47,5 +48,13 @@ public ResponseEntity BananaLogin(@RequestBody Usuario USUARIO) {
     return new ResponseEntity(mensaje.toString(),HttpStatus.BAD_REQUEST);
 }
 
+@Autowired
+    private UsuarioService usuarioService;
+
+    @PostMapping(value = "/CrearAfiliado")
+public ResponseEntity<String> crearAfiliado(@RequestBody AfiliadoPOJO afiliadoPOJO) {
+    String mensaje = usuarioService.crearAfiliado(afiliadoPOJO);
+    return new ResponseEntity<>(mensaje, HttpStatus.OK);
+}
 
 }

@@ -1,11 +1,13 @@
 package com.feelcondorinc.integraservicios.services;
 
 import com.POJOS.UNIDADPOJO;
+import com.POJOS.AfiliadoPOJO;
 import com.feelcondorinc.integraservicios.entities.*;
 import com.feelcondorinc.integraservicios.repositories.EmpleadosSistemaRepository;
 import com.feelcondorinc.integraservicios.repositories.ReservaRepository;
 import com.feelcondorinc.integraservicios.repositories.UnidadRepository;
 import com.feelcondorinc.integraservicios.repositories.UsuarioRepository;
+import com.feelcondorinc.integraservicios.services.AfiliadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class UsuarioService {
     private EmpleadosSistemaRepository empleadosSistemaRepository;
     @Autowired
     private ReservaRepository reservaRepository;
+    @Autowired
+    private AfiliadoService afiliadoService;
    
 
     // TODO logica de servicios
@@ -39,9 +43,15 @@ public class UsuarioService {
 //        empleadosSistemaRepository.guardarEmpleado();
     }
 
-    public void crearAfiliado(Usuario afiliado){
-        usuarioRepository.save(afiliado);
+    public String crearAfiliado(AfiliadoPOJO afiliadoPOJO) {
+        try {
+            afiliadoService.crearAfiliado(afiliadoPOJO);
+            return "Afiliado creado con éxito";
+        } catch (Exception e) {
+            return "Error al crear afiliado: " + e.getMessage();
+        }
     }
+    
 
 // TODO se necesita query personalizada
     //Accionar Empleado
