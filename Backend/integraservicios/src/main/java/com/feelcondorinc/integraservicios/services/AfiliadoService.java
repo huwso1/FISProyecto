@@ -1,5 +1,6 @@
 package com.feelcondorinc.integraservicios.services;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -67,23 +68,27 @@ public class AfiliadoService {
         }
     }
 
-    public List<String> verificarDisponibilidad(Long idRecurso, Date fecha) {
-        Optional<Recurso> recursoOpt = recursoRepository.findById(idRecurso);
+    public List<String> verificarDisponibilidad(String idRecurso, String fecha) {
+
+        Optional<Recurso> recursoOpt = recursoRepository.findById(Long.valueOf(idRecurso));
         if (recursoOpt.isEmpty()) {
             return List.of("Recurso no encontrado");
         }
 
         // Obtener el día de la semana de la fecha dada
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
-        int diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+        //Calendar calendar = Calendar.getInstance();
+        //calendar.setTime();
+        //int diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+        // create a formatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+        int diaSemana = LocalDate.parse(fecha, formatter).getDayOfWeek().getValue();
 
         // Obtener el horario del recurso
         Recurso recurso = recursoOpt.get();
         HorarioDisponible horarioDisponible = recurso.getIdHorarioDisponible();
 
         // Obtener las reservas activas en la fecha especificada para el recurso
-        List<Reserva> reservasActivas = (List)(reservaRepository.ReservasActivasPorFechaRecurso(fecha.toString(), idRecurso));
+        List<Reserva> reservasActivas = (List)(reservaRepository.ReservasActivasPorFechaRecurso(fecha, Long.valueOf(idRecurso)));
 
         // Calcular las franjas horarias disponibles
         List<String> horariosDisponibles = calcularHorariosDisponibles(horarioDisponible, reservasActivas, diaSemana);
