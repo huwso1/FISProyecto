@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.POJOS.RECURSOPOJO;
+import com.POJOS.RESERVAPOJO;
 import com.feelcondorinc.integraservicios.entities.Reserva;
 import com.feelcondorinc.integraservicios.services.AfiliadoService;
 
@@ -22,7 +23,7 @@ public class AfiliadoController {
     private AfiliadoService afiliadoService;
 
     @PostMapping(value="/CrearReserva")
-    public ResponseEntity crearReserva(@RequestBody Reserva reserva){
+    public ResponseEntity crearReserva(@RequestBody RESERVAPOJO reserva){
     
     String hola=afiliadoService.crearReserva(reserva);
     

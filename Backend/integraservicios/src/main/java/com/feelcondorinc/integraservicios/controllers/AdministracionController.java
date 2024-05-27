@@ -86,18 +86,18 @@ public ResponseEntity crearEmpleado(@RequestBody EMPLEADOPOJO Empleado){
 
 }
 
-// TODO
-@PostMapping(value = "/CrearAfiliado")
-public ResponseEntity crearAfiliado(@RequestBody AFILIADOPOJO Afiliado) {
-    String mensaje=adminservice.crearAfiliado(Afiliado);
-    if(mensaje==null){
+ // TODO
+ @PostMapping(value = "/CrearAfiliado")
+ public ResponseEntity crearAfiliado(@RequestBody AFILIADOPOJO Afiliado) {
+     String mensaje=adminservice.crearAfiliado(Afiliado);
+     if(mensaje==null){
 
-        return new ResponseEntity(mensaje,HttpStatus.OK);
-    }
-    JSONObject message=new JSONObject();
-    message.put("message",mensaje);
-    return new ResponseEntity(message.toString(),HttpStatus.BAD_REQUEST);
-}
+         return new ResponseEntity(mensaje,HttpStatus.OK);
+     }
+     JSONObject message=new JSONObject();
+     message.put("message",mensaje);
+     return new ResponseEntity(message.toString(),HttpStatus.BAD_REQUEST);
+ }
 
 
 

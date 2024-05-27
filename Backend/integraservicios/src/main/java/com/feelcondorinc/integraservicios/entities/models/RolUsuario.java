@@ -4,5 +4,4 @@ public enum RolUsuario {
     ADMIN,
     EMPLEADO,
     AFILIADO
-
 }
