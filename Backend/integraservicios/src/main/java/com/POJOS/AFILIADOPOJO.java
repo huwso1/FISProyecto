@@ -2,7 +2,7 @@ package com.POJOS;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class AfiliadoPOJO {
+public class AFILIADOPOJO {
     private Long idUsuario;
     private String contrasenia;
     private String rolUsuario;
@@ -10,12 +10,11 @@ public class AfiliadoPOJO {
     private String apellidos;
     private String numIdentificacion;
     private String numContacto;
-    private String direccion;
     private String telefono;
     private String email;
 
     @JsonCreator
-    public AfiliadoPOJO(Long idUsuario, String contrasenia, String rolUsuario, String nombres, String apellidos,
+    public AFILIADOPOJO(Long idUsuario, String contrasenia, String rolUsuario, String nombres, String apellidos,
                         String numIdentificacion, String numContacto, String direccion, String telefono, String email) {
         this.idUsuario = idUsuario;
         this.contrasenia = contrasenia;
@@ -24,7 +23,6 @@ public class AfiliadoPOJO {
         this.apellidos = apellidos;
         this.numIdentificacion = numIdentificacion;
         this.numContacto = numContacto;
-        this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
     }
@@ -83,14 +81,6 @@ public class AfiliadoPOJO {
 
     public void setNumContacto(String numContacto) {
         this.numContacto = numContacto;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public String getTelefono() {

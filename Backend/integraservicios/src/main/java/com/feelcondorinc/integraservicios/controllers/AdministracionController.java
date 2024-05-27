@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.POJOS.AFILIADOPOJO;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -84,6 +85,22 @@ public ResponseEntity crearEmpleado(@RequestBody EMPLEADOPOJO Empleado){
     return new ResponseEntity(message.toString(),HttpStatus.BAD_REQUEST);
 
 }
+
+// TODO
+@PostMapping(value = "/CrearAfiliado")
+public ResponseEntity crearAfiliado(@RequestBody AFILIADOPOJO Afiliado) {
+    String mensaje=adminservice.crearAfiliado(Afiliado);
+    if(mensaje==null){
+
+        return new ResponseEntity(mensaje,HttpStatus.OK);
+    }
+    JSONObject message=new JSONObject();
+    message.put("message",mensaje);
+    return new ResponseEntity(message.toString(),HttpStatus.BAD_REQUEST);
+}
+
+
+
 
 @PostMapping(value="/Recursos")
 public ResponseEntity<List<Unidad>> consultarRecursos(@RequestBody String body){
