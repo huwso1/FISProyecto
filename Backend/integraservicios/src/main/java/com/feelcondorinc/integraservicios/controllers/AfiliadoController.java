@@ -3,6 +3,7 @@ package com.feelcondorinc.integraservicios.controllers;
 import java.util.List;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +24,7 @@ import com.feelcondorinc.integraservicios.services.AfiliadoService;
 @RequestMapping(value = "/Afiliado")
 public class AfiliadoController {
 
+    @Autowired
     private AfiliadoService afiliadoService;
 
     @PostMapping(value = "/CrearReserva")
@@ -40,12 +42,12 @@ public class AfiliadoController {
 
     }
 
-    @PostMapping(value = "/RecursosDisponibles")
+    @PostMapping(value = "/DisponibilidadRecurso")
     public ResponseEntity<List<Recurso>> consultarRecursosDisponibles(@RequestBody String body) {
         JSONObject request = new JSONObject(body);
-        List<String> listaRecursosDisponibles = afiliadoService.verificarDisponibilidad(request.getString("idRecurso"), request.getString("fecha"));
-        if (listaRecursosDisponibles != null) {
-            return new ResponseEntity(listaRecursosDisponibles, HttpStatus.OK);
+        List<String> listaHorariosRecursosDisponibles = afiliadoService.verificarDisponibilidad(request.getInt("idRecurso"), request.getString("fecha"));
+        if (listaHorariosRecursosDisponibles != null) {
+            return new ResponseEntity(listaHorariosRecursosDisponibles, HttpStatus.OK);
         }
 
         return new ResponseEntity("{ \"message\":\"salio mal\"}", HttpStatus.BAD_REQUEST);
