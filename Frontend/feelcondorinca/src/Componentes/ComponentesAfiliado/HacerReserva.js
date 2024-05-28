@@ -6,6 +6,8 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 import Recursomap from '../ComponentesAdmin/Mapeo/Recursomap';
+import axios from 'axios';
+
 
 
 function MenuReserva({Recursoareservar}){
@@ -18,11 +20,60 @@ function MenuReserva({Recursoareservar}){
     const[Espacioshorarios,setEspacioshorarios]=useState(["12:00","12:15","12:30","12:45","13:00"]);
     const[horarioenfecha,sethorarioenfecha]=useState();
     const[message,setMessage]=useState("");
-    
+
+
+    var peticionHorarios = () => {
+        return new Promise((resolve, reject) => {
+            
+            axios.post("http://localhost:8080/Afiliado/DisponibilidadRecurso", { "idRecurso":Recursoareservar.id,"fecha":formatDate(FechadeReserva)})
+                .then((response) => {
+                    // Resolvemos la promesa con los datos recibidos
+
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    // Rechazamos la promesa con el mensaje de error
+                    
+                });
+        });
+      };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Esperamos la resolución de la promesa usando await
+                const data = await peticionHorarios();
+                // Una vez que la promesa se resuelve, actualizamos el estado con los datos recibidos
+                
+                
+                
+      
+                
+                
+                // Aquí puedes ver los datos en la consola
+            } catch (error) {
+                // Manejamos cualquier error que pueda ocurrir
+                //Se setea la lista con una lista ejemplo, la idea es que el back envie una lista json con objetos analista general
+                // que tendran como atributos, nombre y id
+                
+                
+                console.error('Error al obtener los datos:', error);
+            }
+        };
+      
+        fetchData();
+      }, []);
+
+
+
+
+
+
+
 
 useEffect(()=>{
     
     setDiaSeleccionado(FechadeReserva.getDay());
+    
 
     },[FechadeReserva]);
 useEffect(()=>{
@@ -30,6 +81,12 @@ useEffect(()=>{
     sethorarioenfecha(getHorariodeldia());
 },[diaseleccionado])
 
+function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
 
 function inicializarfecha(){
     var fechaactual=new Date();
@@ -133,7 +190,7 @@ return(
         <h3 >{horarioenfecha}</h3>
        
         <Form.Group>
-        <Form.Label className='center-div' >Elija la fecha en la que quiere realizar su reserva</Form.Label>
+        <Form.Label className='center-div' >Elija la fecha en la que quiere realizar su reserva del recurso {Recursoareservar.nombre}</Form.Label>
         <Form.Control type='date' min={inicializarfecha().toISOString().slice(0,10)} value={FechadeReserva.toISOString().slice(0,10)} onChange={(element)=>{setFechadeReserva(new Date(convertirfecha(element.target.value)))}}/>
         <Form.Label className='center-div' >Espacios horarios disponibles en esa fecha</Form.Label>
         

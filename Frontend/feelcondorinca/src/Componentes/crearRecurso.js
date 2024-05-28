@@ -505,11 +505,13 @@ return(
           {unidades.map((opcionunidad)=>{
             return <option value={opcionunidad.id}>{opcionunidad.nombre}</option>
           })}
+          </Form.Control>
           <Form.Label>Descripcion</Form.Label>
         <Form.Control as="textarea"   value={descripcion}  onChange={(element)=>{
             setDescripcion(element.target.value);
         }} />
-        </Form.Control>
+        
+        
         
         <Form.Label >Horarios</Form.Label>
         <div></div>

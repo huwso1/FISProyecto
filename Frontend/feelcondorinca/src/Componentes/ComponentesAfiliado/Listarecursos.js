@@ -39,9 +39,9 @@ return(
     { recursos?.map((recurso)=>{
         //Cambiar la comparacion por el id de la unidad en lugar del nombre
         var umidad=recurso.Unidad+'';
-        var umidadbuscada=unidad+'';
+        var umidadbuscada=unidad.id+'';
         console.log(umidad);
-        if(umidad.toUpperCase()==umidadbuscada.toUpperCase()){
+        if(umidad.toUpperCase()===umidadbuscada.toUpperCase()){
         return <RecursoA  Recurso={recurso} handler={handlerlista}></RecursoA>;
         }
         return <></>;

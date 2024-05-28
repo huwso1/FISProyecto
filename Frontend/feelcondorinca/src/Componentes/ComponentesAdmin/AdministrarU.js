@@ -181,9 +181,12 @@ const handlermod=(nombreunidad,idunidad)=>{
     setNombrem(nombreunidad);
     setModifying(false);
 }
-if(ordenarPor==='Nombre'){
+function ordenarr(ordenar){
+  setOrdenar(ordenar);
+  if(ordenar==='Nombre'){
     var aux=unidades.slice();
-    unidades.sort((a, b) => {
+    console.log(ordenar);
+    aux.sort((a, b) => {
         const nameA = a.nombre.toUpperCase(); // ignore upper and lowercase
         const nameB = b.nombre.toUpperCase(); // ignore upper and lowercase
         if (nameA < nameB) {
@@ -196,13 +199,16 @@ if(ordenarPor==='Nombre'){
         // names must be equal
         return 0;
       });
+      setUnidades(aux);
 }
-if(ordenarPor==='Cantidad de reservas'){
+if(ordenar==='Cantidad de reservas'){
     var aux=unidades.slice();
     unidades.sort((a, b) => {
         return a.cantidaddereservas-b.cantidaddereservas;
         
       });
+      setUnidades(aux);
+}
 }
 if(isModifying){
 return(
@@ -211,7 +217,7 @@ return(
     
    <Card style={{ minHeight:'100%', backgroundColor:'#D6F2F5', width:'20%', paddingTop:'4rem',height:'100%',alignItems:'center' }}>
     <Form.Label style={{left:'50%'}}>Ordenar Por</Form.Label>
-    <Form.Control as='select' placeholder='Ordenar Por' onChange={(element)=>{setOrdenar(element.target.value)}}>
+    <Form.Control as='select' placeholder='Ordenar Por' onChange={(element)=>{ordenarr(element.target.value)}}>
        { ordenar.map((element)=>{
         return <option value={element}>{element}</option>;
         })}

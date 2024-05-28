@@ -527,7 +527,7 @@ public class AdminService {
         nuevoempleado.setNombres(empleado.getNombre());
         nuevoempleado.setApellidos(empleado.getApellido());
         nuevoempleado.setContrasenia(empleado.getNombre().toUpperCase().charAt(0) + empleado.getApellido().toLowerCase() + empleado.getDocumento().substring(0, 2));
-        nuevoempleado.setIdUsuario(Long.valueOf(empleado.getDocumento()));
+        nuevoempleado.setIdUsuario(empleado.getDocumento()+"");
         nuevoempleado.setRolUsuario(RolUsuario.EMPLEADO);
         nuevoempleado.setNumContacto(empleado.getTelefono());
         nuevoempleado.setNumIdentificacion(empleado.getDocumento());

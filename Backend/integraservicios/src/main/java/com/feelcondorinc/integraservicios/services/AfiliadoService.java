@@ -131,12 +131,14 @@ public class AfiliadoService {
 
         Horario horarioRecurso = obtenerHorarioPorDiaSemana(horarioDisponibleRecurso, diaSemana);
         //Ordenar y ecnontrar 
-        LocalTime auxiliar = LocalTime.parse(horariosEmpleadosEnTurno.get(0).getHoraInicial()+":"+horariosEmpleadosEnTurno.get(0).getMinutoInicial());
+        LocalTime auxiliar = LocalTime.parse(formatearHorario(horariosEmpleadosEnTurno.get(0).getHoraInicial(),
+        horariosEmpleadosEnTurno.get(0).getMinutoInicial()));
+
         for (Horario horario: horariosEmpleadosEnTurno){
-            if (LocalTime.parse((horario.getHoraInicial()+":"+horario.getMinutoInicial())).isBefore(auxiliar)){
+            if (LocalTime.parse((formatearHorario(horario.getHoraInicial(),horario.getMinutoInicial()))).isBefore(auxiliar)){
                 if (horario.getHoraInicial()>=horarioRecurso.getHoraInicial()) {
                     if (horario.getMinutoInicial()<=horarioRecurso.getMinutoInicial()) {
-                        auxiliar = LocalTime.parse((horario.getHoraInicial()+":"+horario.getMinutoInicial()));
+                        auxiliar = LocalTime.parse((formatearHorario(horario.getHoraInicial(),horario.getMinutoInicial())));
                     }
                 }
             }
@@ -218,4 +220,17 @@ public class AfiliadoService {
         int minutosRestantes = minutos % 60;
         return String.format("%02d:%02d", horas, minutosRestantes);
     }
+    private String formatearHorario(int hora, int minuto){
+        String horarioempleadoaux=hora+"";
+        if(hora<10){
+            horarioempleadoaux="0"+horarioempleadoaux;
+        }
+        horarioempleadoaux=horarioempleadoaux+":";
+        if(minuto<10){
+            horarioempleadoaux=horarioempleadoaux+"0";
+        }
+        horarioempleadoaux=horarioempleadoaux+minuto;
+        return horarioempleadoaux;
+    }
+    
 }
