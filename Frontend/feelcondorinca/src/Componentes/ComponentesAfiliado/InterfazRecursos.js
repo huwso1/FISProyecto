@@ -9,6 +9,7 @@ import Recursomap from '../ComponentesAdmin/Mapeo/Recursomap';
 import Unidadmap from '../ComponentesAdmin/Mapeo/Unidadmap';
 import Listarecursos from './Listarecursos';
 import HacerReserva from './HacerReserva';
+import axios from 'axios';
 
 function InterfazRecursos(){
     const [recursos,setRecursos]=useState([new Recursomap(1,"Perros",32,"Tinderud","15:00","16:00"),new Recursomap(2,"Gatos",92,"Tinderud"),new Recursomap(3,"Homicidios",300,"Laboratorios")]);
@@ -23,6 +24,161 @@ function InterfazRecursos(){
         setRecursoR(recursos.find((recurso)=>recurso.id==idrecurso));
         setModifying(false);
     }
+
+    var peticionUnidades = () => {
+      return new Promise((resolve, reject) => {
+          
+          axios.post("http://localhost:8080/Administracion/Unidades", { })
+              .then((response) => {
+                  // Resolvemos la promesa con los datos recibidos
+                  resolve(response.data);
+              })
+              .catch((error) => {
+                  // Rechazamos la promesa con el mensaje de error
+                  
+              });
+      });
+    };
+
+    useEffect(() => {
+      const fetchData = async () => {
+          try {
+              // Esperamos la resolución de la promesa usando await
+              const data = await peticionUnidades();
+              // Una vez que la promesa se resuelve, actualizamos el estado con los datos recibidos
+              
+              
+              parseUnidad(data);
+    
+              
+              
+              // Aquí puedes ver los datos en la consola
+          } catch (error) {
+              // Manejamos cualquier error que pueda ocurrir
+              //Se setea la lista con una lista ejemplo, la idea es que el back envie una lista json con objetos analista general
+              // que tendran como atributos, nombre y id
+              
+              
+              console.error('Error al obtener los datos:', error);
+          }
+      };
+    
+      fetchData();
+    }, []);
+
+    function parseUnidad(data){
+      var listaud=[];
+        data.map((unidad)=>{
+          var li;
+          var lf;
+          var mi;
+          var mf;
+          var mii;
+          var mif;
+          var ji;
+          var jf;
+          var vi;
+          var vf;
+          var si;
+          var sf;
+          
+           unidad.idHorarioDisponible.horarios.map((horario,index,elements)=>{
+             if(li==null && horario.diaSemana==="LUNES"){
+                 if((horario.horaInicial+"").length<2){
+              li= "0"+horario.horaInicial+":00"
+             }else{
+               li= horario.horaInicial+":00"
+             }
+      
+             }
+             if(lf==null && elements.at(index+1).diaSemana==="MARTES"){
+               if((horario.horaFinal+"").length<2){
+                 lf= "0"+horario.horaFinal+":00"
+                }else{
+                  lf= horario.horaFinal+":00"
+                }
+             }
+             if(mi==null && horario.diaSemana==="MARTES"){
+               if((horario.horaInicial+"").length<2){
+            mi= "0"+horario.horaInicial+":00"
+           }else{
+             mi= horario.horaInicial+":00"
+           }
+      
+           }
+           if(mf==null && elements.at(index+1).diaSemana==="MIERCOLES"){
+             if((horario.horaFinal+"").length<2){
+               mf= "0"+horario.horaFinal+":00"
+              }else{
+                mf= horario.horaFinal+":00"
+              }
+           }
+           if(mii==null && horario.diaSemana==="MIERCOLES"){
+             if((horario.horaInicial+"").length<2){
+          mii= "0"+horario.horaInicial+":00"
+         }else{
+           mii= horario.horaInicial+":00"
+         }
+      
+         }
+         if(mif==null && elements.at(index+1).diaSemana==="JUEVES"){
+           if((horario.horaFinal+"").length<2){
+             mif= "0"+horario.horaFinal+":00"
+            }else{
+              mif= horario.horaFinal+":00"
+            }
+         }
+         if(ji==null && horario.diaSemana==="JUEVES"){
+           if((horario.horaInicial+"").length<2){
+        ji= "0"+horario.horaInicial+":00"
+       }else{
+         ji= horario.horaInicial+":00"
+       }
+      
+       }
+       if(jf==null && elements.at(index+1).diaSemana==="VIERNES"){
+         if((horario.horaFinal+"").length<2){
+           jf= "0"+horario.horaFinal+":00"
+          }else{
+            jf= horario.horaFinal+":00"
+          }
+       }
+       if(vi==null && horario.diaSemana==="VIERNES"){
+         if((horario.horaInicial+"").length<2){
+      vi= "0"+horario.horaInicial+":00"
+      }else{
+       vi= horario.horaInicial+":00"
+      }
+      
+      }
+      if(vf==null && elements.at(index+1).diaSemana==="SABADO"){
+       if((horario.horaFinal+"").length<2){
+         vf= "0"+horario.horaFinal+":00"
+        }else{
+          vf= horario.horaFinal+":00"
+        }
+      }
+      if(si==null && horario.diaSemana==="SABADO"){
+       if((horario.horaInicial+"").length<2){
+      si= "0"+horario.horaInicial+":00"
+      }else{
+      si= horario.horaInicial+":00"
+      }
+      
+      }
+      if(sf==null && elements.length-1==index){
+      if((horario.horaFinal+"").length<2){
+       sf= "0"+horario.horaFinal+":00"
+      }else{
+        sf= horario.horaFinal+":00"
+      }
+      }
+           })
+           
+           listaud.push(new Unidadmap(unidad.idUnidad,unidad.nombre,unidad.cantidaddereservas,li,lf,mi,mf,mii,mif,ji,jf,vi,vf,si,sf,unidad.intervaloMinimoPrestamo));
+         }) 
+         setUnidades(listaud);
+      }
 
     if(ordenarPor==='Nombre'){
         var aux=recursos.slice();
@@ -45,7 +201,7 @@ function InterfazRecursos(){
     <div style={{display:'flex',height:'100em'}} >
     
     <Card style={{ minHeight:'100%', backgroundColor:'#D6F2F5', width:'20%', paddingTop:'4rem',height:'100%',alignItems:'center' }}>
-     <Form.Label style={{left:'50%'}}>Ordenar Por</Form.Label>
+     <Form.Label style={{left:'50%'}}>Filtrar por  Recurso</Form.Label>
      <Form.Control as='select' placeholder='Ordenar Por' onChange={(element)=>{setOrdenar(element.target.value)}}>
         { ordenar.map((element)=>{
          return <option value={element}>{element}</option>;
@@ -54,7 +210,7 @@ function InterfazRecursos(){
      <Form.Label style={{left:'50%'}}>Unidad</Form.Label>
      <Form.Control as='select' placeholder='Unidad' onChange={(element)=>{setUnidad(element.target.value)}}>
         { unidades.map((element)=>{
-         return <option value={element.nombre}>{element.nombre}</option>;
+         return <option value={element.id}>{element.nombre}</option>;
          })}
      </Form.Control>
  </Card>

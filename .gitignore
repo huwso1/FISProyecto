@@ -58,4 +58,6 @@ yarn-error.log*
 
 /frontend/feelcondorinca/node_modules/
 
+/Backend/integraservicios/src/main/resources
+
 

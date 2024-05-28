@@ -25,6 +25,6 @@ public class RESERVAPOJO {
     private EstadoReserva estadoReserva;
     private String observaciones;
     private Long idRecurso;  
-    private Long idUsuario;  
+    private String idUsuario;  
 
 }

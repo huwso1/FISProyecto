@@ -18,9 +18,9 @@ public class Usuario {
 
     @Id
     @Column(name = "idUsuario")
-    private Long idUsuario;
+    private String idUsuario;
 
-    @Column(name = "contrasenia", length=10)
+    @Column(name = "contrasenia", length=25)
     private String contrasenia;
 
     @Column(name = "rolUsuario", length=8)
