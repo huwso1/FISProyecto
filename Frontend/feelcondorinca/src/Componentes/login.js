@@ -46,7 +46,7 @@ function Login() {
                 </div>
                 <h1 class = "probar">Contraseña</h1>
                 <div className="form-group">
-                    <input type="text" name="Contrasena" onChange={(element)=>{
+                    <input type="password" name="Contrasena" onChange={(element)=>{
                         SetPassword(element.target.value);
                     }}/>
                 </div>

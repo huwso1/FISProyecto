@@ -446,7 +446,7 @@ return(
         </Card>
         </Form.Group>
         <div style={{padding:'1em 2em'}}></div>
-        <Form.Control as="button" style={{padding:'2px 2em',backgroundColor:'#92a8d1'}} onClick={crearempleado}>Crear unidad</Form.Control>
+        <Form.Control as="button" style={{padding:'2px 2em',backgroundColor:'#92a8d1'}} onClick={crearempleado}>Crear Empleado</Form.Control>
     </Form>
     
 </CardBody>
