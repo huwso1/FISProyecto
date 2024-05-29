@@ -6,7 +6,7 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 
-function ReservaUnidad({CodigoR,CodigoRe,NombreU,FechaInicio,FechaFinal,handler,estado}){
+function Reserva({CodigoR,CodigoRe,NombreU,FechaInicio,FechaFinal,handler,estado}){
     
 const [debug,setdebug]=useState();
 const handlecancelacion=(idreserva)=>{
@@ -51,4 +51,4 @@ return(
     </CardGroup>
 )
 }
-export default ReservaUnidad;
+export default Reserva;

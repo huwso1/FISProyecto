@@ -21,7 +21,7 @@ public class RESERVAPOJO {
     private int minutoInicial;
     private int horaFinal;
     private int minutoFinal;
-    private Date fecha;
+    private String fecha;
     private EstadoReserva estadoReserva;
     private String observaciones;
     private Long idRecurso;  

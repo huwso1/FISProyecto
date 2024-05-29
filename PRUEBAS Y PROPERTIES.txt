@@ -1,0 +1,178 @@
+--Properties
+spring.application.name=integraservicios
+
+#Config DB
+spring.datasource.url=jdbc:postgresql://localhost:5442/Integraservicios_db
+
+#Robert Port
+# spring.datasource.url=jdbc:postgresql://localhost:5442/Integraservicios_db
+spring.datasource.username=postgres
+spring.datasource.password=15280213
+
+#Config jpa
+spring.jpa.database=postgresql
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+logging.level.org.hibernate.SQL=DEBUG
+
+--Pruebas
+--INSERTS DE USUARIOS DE PRUEBA
+insert into usuarios(id_usuario,rol_usuario,contrasenia,num_contacto,num_identificacion,nombres,apellidos) values('343932132','AFILIADO','Password12','31456321','343932132','Jhonson','Carl');
+Usuarios: 343932132
+Contraseña:Password12
+insert into usuarios(id_usuario,rol_usuario,contrasenia,num_contacto,num_identificacion,nombres,apellidos) values('MASTER','ADMIN','Master12','31456320','343932139','Master','Olivia');
+Usuarios: MASTER
+Contraseña:Master12
+
+--Creacion de unidad 
+Nombre: Unidad Deportiva
+Intervalo minimo:120
+Descripcion
+Unidad dedicada a la recreación de la Universidad Distrital Francisco José de Caldas, donde se administran los abundantes espacios y recursos deportivos de la sede de la 40.
+
+Lunes
+08:00-18:00
+Martes 
+08:00-18:00
+Miercoles
+08:00-18:00
+Viernes
+08:00-18:00
+Sabado
+08:00-14:00
+
+--Creacion de unidad 
+Nombre: Unidad Investigativa
+Intervalo minimo:30
+Descripcion
+Unidad dedicada a prestar los espacios dedicados a la generacion del conocimiento en la Universidad Distrital Francisco Jose de Caldas.
+
+Lunes
+08:00-18:00
+Martes 
+08:00-18:00
+Miercoles
+08:00-18:00
+Viernes
+08:00-18:00
+Sabado
+08:00-14:00
+
+--Creacion de Empleado Unidad Investigativa
+Nombre Empleado
+Puma
+Apellido Empleado
+Mamani Quispe
+Documento Empleado 98376321
+Telefono: 3224147756
+Unidad Investigativa
+Horarios
+Lunes
+08:00 13:00
+Martes
+08:00 13:00
+Miercoles
+08:00 13:00
+Jueves
+08:00 13:00
+Viernes
+08:00 13:00
+Sabado 
+08:00 11:00
+
+Usuario:98376321
+Contraseña:Jtalarga12
+--Creacion de Empleado Unidad Deportiva
+Nombre Empleado
+Juancho
+Apellido Empleado
+Talarga
+Documento Empleado 123456789
+Telefono: 6577414223
+Unidad Investigativa
+Horarios
+Lunes
+08:00 18:00
+Martes
+08:00 18:00
+Miercoles
+08:00 18:00
+Jueves
+08:00 18:00
+Viernes
+08:00 18:00
+Sabado
+08:00 14:00
+Usuario:98376321
+Contraseña:Pmamani quispe98
+--Creacion Recurso Unidad Deportiva
+Nombre Recurso:
+Muro de Escalar
+Unidad: Deportiva
+Descripcion:
+Muro para escalar(Incluye equipo para escalar para 4 personas).  
+Incluye:
+Colchon
+Botiquín de primeros auxilios
+Servicio de enfermeria.
+Es un espacio abierto.
+Capacidad: 8 Personas.
+Horarios:
+LUNES
+08:00 13:00
+MARTES
+08:00 13:00
+MIERCOLES
+08:00 13:00
+JUEVES
+08:00 13:00
+VIERNES
+08:00 13:00
+SABADO
+08:00 11:00
+--Creacion Recurso Unidad Deportiva
+Nombre Recurso:
+Balon
+Unidad: Deportiva
+Descripcion:
+Balon de cuero de elefante cuadrado.  
+Incluye:
+Balon
+No incluye aire.
+Horarios:
+LUNES
+08:00 18:00
+MARTES
+08:00 18:00
+MIERCOLES
+08:00 18:00
+JUEVES
+08:00 18:00
+VIERNES
+08:00 18:00
+SABADO
+08:00 14:00
+--Creacion Recurso Unidad Investigativa
+Nombre: Kit Introduccion Fisica
+Unidad: Investigativa
+Descripcion:
+Acelerador de partículas para Introduccion a la fisica.
+Incluye:
+Bomba atomica
+Mini Planta nuclear
+Simulador de Fusion
+Nave Espacial
+Horarios:
+LUNES
+08:00 18:00
+MARTES
+08:00 18:00
+MIERCOLES
+08:00 18:00
+JUEVES
+08:00 18:00
+VIERNES
+08:00 18:00
+SABADO
+08:00 14:00

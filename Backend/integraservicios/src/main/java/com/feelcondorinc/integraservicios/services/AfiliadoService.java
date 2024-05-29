@@ -28,6 +28,7 @@ import com.feelcondorinc.integraservicios.entities.Reserva;
 import com.feelcondorinc.integraservicios.entities.Unidad;
 import com.feelcondorinc.integraservicios.entities.Usuario;
 import com.feelcondorinc.integraservicios.entities.models.EstadoRecurso;
+import com.feelcondorinc.integraservicios.entities.models.EstadoReserva;
 import com.feelcondorinc.integraservicios.repositories.EmpleadosSistemaRepository;
 import com.feelcondorinc.integraservicios.repositories.HorarioDisponibleRepository;
 import com.feelcondorinc.integraservicios.repositories.RecursoRepository;
@@ -59,8 +60,9 @@ public class AfiliadoService {
         reserva.setMinutoInicial(reservaPOJO.getMinutoInicial());
         reserva.setHoraFinal(reservaPOJO.getHoraFinal());
         reserva.setMinutoFinal(reservaPOJO.getMinutoFinal());
-        reserva.setFecha(reservaPOJO.getFecha());
-        reserva.setEstadoReserva(reservaPOJO.getEstadoReserva());
+        LocalDate fechareserva=LocalDate.parse(reservaPOJO.getFecha().substring(0,10));
+        reserva.setFecha(java.sql.Date.valueOf(fechareserva));
+        reserva.setEstadoReserva(EstadoReserva.PENDIENTE);
         reserva.setObservaciones(reservaPOJO.getObservaciones());
 
         // Asociar el recurso a la reserva
@@ -75,10 +77,12 @@ public class AfiliadoService {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(reservaPOJO.getIdUsuario());
         if (usuarioOpt.isPresent()) {
             reserva.setIdUsuario(usuarioOpt.get());
-            return "Exito";
+            reservaRepository.save(reserva);
+            return null;
         } else {
             return "Usuario no encontrado";
         }
+        
     }
 
     public List<String> verificarDisponibilidad(int idRecurso, String fecha) {
@@ -101,6 +105,12 @@ public class AfiliadoService {
         // create a formatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String diaSemana = LocalDate.parse(fecha, formatter).getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es", "ES")).toUpperCase();
+        if(diaSemana.equals("MIÉRCOLES")){
+            diaSemana="MIERCOLES";
+        }
+        if(diaSemana.equals("SÁBADO")){
+            diaSemana="SABADO";
+        }
         System.out.println(diaSemana+"perrito");
 
 
@@ -115,7 +125,7 @@ public class AfiliadoService {
         
         List<Horario> horariosEmpleadosEnTurno = new ArrayList<>();
         
-        Iterator<EmpleadosSistema> empleados = empleadosSistemaRepository.findAll().iterator();
+        Iterator<EmpleadosSistema> empleados = empleadosSistemaRepository.findByIdUnidad(recurso.getIdUnidad()).iterator();
         ArrayList<EmpleadosSistema> listaEmpleados = new ArrayList<EmpleadosSistema>();
         while (empleados.hasNext()) {
             EmpleadosSistema empleado = empleados.next();
@@ -152,18 +162,31 @@ public class AfiliadoService {
     
             LocalTime horaInicialEmpleados = auxiliar;
             
-            auxiliar = LocalTime.parse(horariosEmpleadosEnTurno.get(0).getHoraFinal()+":"+horariosEmpleadosEnTurno.get(0).getHoraFinal());
+            auxiliar = LocalTime.parse(formatearHorario(horariosEmpleadosEnTurno.get(0).getHoraFinal(),horariosEmpleadosEnTurno.get(0).getMinutoFinal()));
             for (Horario horario: horariosEmpleadosEnTurno){
-                if (LocalTime.parse((horario.getHoraFinal()+":"+horario.getHoraFinal())).isAfter(auxiliar)){
-                    if (horario.getHoraFinal()<=horarioRecurso.get(-1).getHoraFinal()) {
-                        if (horario.getMinutoFinal()>=horarioRecurso.get(-1).getMinutoFinal()) {
-                            auxiliar = LocalTime.parse((horario.getHoraFinal()+":"+horario.getHoraFinal()));
+                if (LocalTime.parse(formatearHorario(horario.getHoraFinal(),horario.getMinutoFinal())).isAfter(auxiliar)){
+                    if (horario.getHoraFinal()<=horarioRecurso.get(horarioRecurso.size()-1).getHoraFinal()) {
+                        if (horario.getMinutoFinal()>=horarioRecurso.get(horarioRecurso.size()-1).getMinutoFinal()) {
+                            auxiliar = LocalTime.parse(formatearHorario(horario.getHoraFinal(),horario.getMinutoFinal()));
                         }
                     }
                 }
             }
-    
+            List<String> horariofinalfinalestesi=new ArrayList<String>();
             LocalTime horarFinalEmpleado = auxiliar;
+            for(String x:horariosDisponibles){
+                LocalTime tiempoinicial=LocalTime.parse(x.substring(0,5));
+                LocalTime tiempoFinal=LocalTime.parse(x.substring(6,11));
+                if(tiempoinicial.isAfter(horaInicialEmpleados) || tiempoinicial.equals(horaInicialEmpleados)){
+                    if(tiempoFinal.isBefore(horarFinalEmpleado) || tiempoFinal.equals(horarFinalEmpleado)){
+                        horariofinalfinalestesi.add(x);
+                    }
+                }
+            }
+
+
+            return horariofinalfinalestesi;
+            
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -207,12 +230,12 @@ public class AfiliadoService {
             int inicioDisponible = horaInicio * 60 + minutoInicio;
             for (int[] franja : franjasOcupadas) {
                 if (inicioDisponible < franja[0]) {
-                    horariosDisponibles.add(formatearHora(inicioDisponible) + " - " + formatearHora(franja[0]));
+                    horariosDisponibles.add(formatearHora(inicioDisponible) + "-" + formatearHora(franja[0]));
                 }
                 inicioDisponible = Math.max(inicioDisponible, franja[1]);
             }
             if (inicioDisponible < horaFin * 60 + minutoFin) {
-                horariosDisponibles.add(formatearHora(inicioDisponible) + " - " + formatearHora(horaFin * 60 + minutoFin));
+                horariosDisponibles.add(formatearHora(inicioDisponible) + "-" + formatearHora(horaFin * 60 + minutoFin));
             }
         }
 
@@ -220,12 +243,13 @@ public class AfiliadoService {
     }
 
     private List<Horario> obtenerHorarioPorDiaSemana(HorarioDisponible horarioDisponible, String diaSemana) {
+        System.out.println(diaSemana);
         List<Horario> horariosRecurso = new ArrayList<>();
         for (Horario horario : horarioDisponible.getHorarios()) {
             if (horario.getDiaSemana().equals(diaSemana)) {
                 horariosRecurso.add(horario);
             }
-            System.out.println(horario.getDiaSemana().equals(diaSemana));
+            
         }
         return horariosRecurso;
     }

@@ -7,12 +7,13 @@ import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 import Recursomap from '../ComponentesAdmin/Mapeo/Recursomap';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 
 function MenuReserva({Recursoareservar}){
     //Linea de prueba
-    Recursoareservar.intervalo=15;
+  
     //Linea de prueba
     const [FechadeReserva,setFechadeReserva]=useState( inicializarfecha());
     const [EHseleccionados,setEH]=useState([]);
@@ -22,18 +23,51 @@ function MenuReserva({Recursoareservar}){
     const[message,setMessage]=useState("");
 
 
-    var peticionHorarios = () => {
+    var peticionHorarios = (fecha) => {
         return new Promise((resolve, reject) => {
             
-            axios.post("http://localhost:8080/Afiliado/DisponibilidadRecurso", { "idRecurso":Recursoareservar.id,"fecha":formatDate(FechadeReserva)})
+               var fechar=formatDate(FechadeReserva);
+
+            axios.post("http://localhost:8080/Afiliado/DisponibilidadRecurso", { "idRecurso":Recursoareservar.id,"fecha":fechar})
                 .then((response) => {
                     // Resolvemos la promesa con los datos recibidos
-
+                    var Listahorarios=[];
+                    response.data.map((cadenaHorario)=>{
+                        Listahorarios.push(cadenaHorario);
+                    })
+                    setEspacioshorarios(Listahorarios);
                     resolve(response.data);
                 })
                 .catch((error) => {
                     // Rechazamos la promesa con el mensaje de error
                     
+                });
+        });
+      };
+
+      var peticionReserva = () => {
+        return new Promise((resolve, reject) => {
+            var Horainicial;
+            var HoraFinal;
+            var MinutoInicial;
+            var MinutoFinal;
+            Horainicial=EHseleccionados.at(0).substring(0,2);
+            MinutoInicial=EHseleccionados.at(0).substring(3,5);
+            HoraFinal=EHseleccionados.at(-1).substring(7,9);
+            MinutoFinal=EHseleccionados.at(-1).substring(10,12);
+        
+
+            axios.post("http://localhost:8080/Afiliado/CrearReserva", {"horaInicial":parseInt(Horainicial),"minutoinicial":parseInt(MinutoInicial),
+                "horaFinal":parseInt(HoraFinal),"minutoFinal":parseInt(MinutoFinal),"fecha":FechadeReserva,"idRecurso":Recursoareservar.id,"idUsuario":window.sessionStorage.getItem("idUsuario")
+             })
+                .then((response) => {
+                    // Resolvemos la promesa con los datos recibidos
+                    Swal.fire({title:"Reserva Creada con esito",text:"",icon:"success"});
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    // Rechazamos la promesa con el mensaje de error
+                    window.alert("Reserva arruinada con rotundo exito");
                 });
         });
       };
@@ -71,7 +105,7 @@ function MenuReserva({Recursoareservar}){
 
 
 useEffect(()=>{
-    
+    peticionHorarios();
     setDiaSeleccionado(FechadeReserva.getDay());
     
 
@@ -123,21 +157,24 @@ function checkseleccion(intervalorecurso){
                 
             anterior=parseInt(nocolonespace.substring(2,4));
             
-                    
+            
             anterior=anterior+parseInt(nocolonespace.substring(0,2))*60;
             
             }else{
                 if(interval==null){
                     
-                    interval=parseInt(nocolonespace.substring(2,3));
+                    interval=parseInt(nocolonespace.substring(2,4));
                     interval=interval+parseInt(nocolonespace.substring(0,2))*60 - anterior;
-                    
+                   
                     
                     
                 }else{
+                    
                     var minutos=parseInt(nocolonespace.substring(2,4));
+                    
                     minutos=minutos+parseInt(nocolonespace.substring(0,2))*60; 
-                    console.log(anterior);
+                    console.log(minutos-anterior);
+                    console.log(interval);
                     
                 if((minutos-anterior)!==interval & (minutos-anterior)!==interval*-1){
                     setMessage("Debe elegir espacio en horarios consecutivos"); 
@@ -150,6 +187,7 @@ function checkseleccion(intervalorecurso){
         })
     }
     if(correcto==true){
+        peticionReserva();
         setMessage("");
     }
         
@@ -183,6 +221,9 @@ function getHorariodeldia(){
     }
     
 }
+
+
+
 return(
     <div style={{height:'100rem', backgroundColor:'#D6F2F5'}}>
         
@@ -191,7 +232,7 @@ return(
        
         <Form.Group>
         <Form.Label className='center-div' >Elija la fecha en la que quiere realizar su reserva del recurso {Recursoareservar.nombre}</Form.Label>
-        <Form.Control type='date' min={inicializarfecha().toISOString().slice(0,10)} value={FechadeReserva.toISOString().slice(0,10)} onChange={(element)=>{setFechadeReserva(new Date(convertirfecha(element.target.value)))}}/>
+        <Form.Control type='date' min={inicializarfecha().toISOString().slice(0,10)} value={FechadeReserva.toISOString().slice(0,10)} onChange={(element)=>{setFechadeReserva(convertirfecha(element.target.value))}}/>
         <Form.Label className='center-div' >Espacios horarios disponibles en esa fecha</Form.Label>
         
         <Card>
@@ -201,7 +242,7 @@ return(
             Espacioshorarios.map((espacio)=>{
             return( 
             
-            <Form.Check  style={{height:'2rem'}} type="checkbox" value={espacio} label={espacio} onChange={(element)=>{
+            <Form.Check  style={{height:'2rem'}} type="checkbox" value={espacio} label={espacio.substring(0,5)} onChange={(element)=>{
                 if(element.target.checked){
                     var seleccionados=EHseleccionados.slice(0);
                     seleccionados.push(element.target.value);

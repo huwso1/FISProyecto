@@ -12,9 +12,9 @@ import HacerReserva from './HacerReserva';
 import axios from 'axios';
 
 function InterfazRecursos(){
-    const [recursos,setRecursos]=useState([new Recursomap(1,"Perros",32,"Tinderud","15:00","16:00"),new Recursomap(2,"Gatos",92,"Tinderud"),new Recursomap(3,"Homicidios",300,"Laboratorios")]);
+    const [recursos,setRecursos]=useState([]);
     const [ordenarPor,setOrdenar]=useState("");
-    const [unidades,setUnidades]=useState([new Unidadmap(1,"Tinderud",32),new Unidadmap(2,"Laboratorios",92),new Unidadmap(3,"Homicidios",300)]);
+    const [unidades,setUnidades]=useState([]);
     const [unidad,setUnidad]=useState("");
     const [recursoR,setRecursoR]=useState(null);
     const [isModifying,setModifying]=useState(true);
@@ -309,7 +309,7 @@ function InterfazRecursos(){
         }
              })
              
-             listaud.push(new Recursomap(unidad.idRecurso,unidad.nombre,unidad.cantidaddereservas,unidad.idUnidad.idUnidad,li,lf,mi,mf,mii,mif,ji,jf,vi,vf,si,sf));
+             listaud.push(new Recursomap(unidad.idRecurso,unidad.nombre,unidad.cantidaddereservas,unidad.idUnidad.idUnidad,li,lf,mi,mf,mii,mif,ji,jf,vi,vf,si,sf,unidad.idUnidad.intervaloMinimoPrestamo,unidad.descripcion));
            }) 
            console.log(listaud);
            setRecursos(listaud);

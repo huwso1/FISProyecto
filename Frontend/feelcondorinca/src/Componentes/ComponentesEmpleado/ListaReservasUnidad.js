@@ -35,7 +35,7 @@ function ListaReservasUnidad({Reservas,handlerReservas}){
             </Card>
             <Card style={{backgroundColor:'#129EF2',alignItems:'center'}}>
                 <CardBody >
-                    <p>Fecha de inicio y hora-Fecha de finalizacion y hora</p>
+                    <p>Fecha de inicio-Fecha de finalizacion</p>
                 </CardBody>
             </Card>
             <Card style={{backgroundColor:'#129EF2'}}>

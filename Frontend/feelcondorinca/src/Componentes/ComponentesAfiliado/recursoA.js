@@ -34,7 +34,7 @@ return(
         <Card>
             <CardBody>
             <p>Descripcion</p>
-            <p>Aqui habra una descripcion del recurso</p>
+            <p>{Recurso.descripcion}</p>
             </CardBody>
         </Card>
     </CardGroup>

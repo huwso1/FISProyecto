@@ -27,20 +27,7 @@ public class AfiliadoController {
     @Autowired
     private AfiliadoService afiliadoService;
 
-    @PostMapping(value = "/CrearReserva")
-    public ResponseEntity crearReserva(@RequestBody RESERVAPOJO reserva) {
-
-        String hola = afiliadoService.crearReserva(reserva);
-
-        JSONObject respuesta = new JSONObject();
-        respuesta.put("message", hola);
-        if (hola == null) {
-            return new ResponseEntity(respuesta.toString(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity("banana", HttpStatus.BAD_REQUEST);
-
-    }
+   
 
     @PostMapping(value = "/DisponibilidadRecurso")
     public ResponseEntity<List<Recurso>> consultarRecursosDisponibles(@RequestBody String body) {
@@ -48,6 +35,17 @@ public class AfiliadoController {
         List<String> listaHorariosRecursosDisponibles = afiliadoService.verificarDisponibilidad(request.getInt("idRecurso"), request.getString("fecha"));
         if (listaHorariosRecursosDisponibles != null) {
             return new ResponseEntity(listaHorariosRecursosDisponibles, HttpStatus.OK);
+        }
+
+        return new ResponseEntity("{ \"message\":\"salio mal\"}", HttpStatus.BAD_REQUEST);
+
+    }
+    @PostMapping(value = "/CrearReserva")
+    public ResponseEntity CrearReserva(@RequestBody RESERVAPOJO reserva) {
+        
+        String message = afiliadoService.crearReserva(reserva);
+        if (message == null) {
+            return new ResponseEntity(message, HttpStatus.OK);
         }
 
         return new ResponseEntity("{ \"message\":\"salio mal\"}", HttpStatus.BAD_REQUEST);
