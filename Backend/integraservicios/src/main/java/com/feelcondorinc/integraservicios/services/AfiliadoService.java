@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
@@ -100,16 +101,18 @@ public class AfiliadoService {
         // create a formatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String diaSemana = LocalDate.parse(fecha, formatter).getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es", "ES")).toUpperCase();
+        System.out.println(diaSemana+"perrito");
 
 
 
         // Obtener las reservas activas en la fecha especificada para el recurso
-        List<Reserva> reservasActivas = (List)(reservaRepository.ReservasActivasPorFechaRecurso(fecha, Long.valueOf(idRecurso)));
+        ArrayList<Reserva> reservasActivas = new ArrayList<>(reservaRepository.ReservasActivasPorFechaRecurso(fecha, Long.valueOf(idRecurso)));
 
        // Calcular las franjas horarias disponibles
-         List<String> horariosDisponibles = calcularHorariosDisponiblesParaOtrasReservas(horarioDisponibleRecurso, reservasActivas, diaSemana);
+        List<String> horariosDisponibles = calcularHorariosDisponiblesParaOtrasReservas(horarioDisponibleRecurso, reservasActivas, diaSemana);
         
         //Consultar hoorario del empleado ese dia de la semana
+        
         List<Horario> horariosEmpleadosEnTurno = new ArrayList<>();
         
         Iterator<EmpleadosSistema> empleados = empleadosSistemaRepository.findAll().iterator();
@@ -129,56 +132,60 @@ public class AfiliadoService {
             }
         }
 
-        Horario horarioRecurso = obtenerHorarioPorDiaSemana(horarioDisponibleRecurso, diaSemana);
-        //Ordenar y ecnontrar 
-        LocalTime auxiliar = LocalTime.parse(formatearHorario(horariosEmpleadosEnTurno.get(0).getHoraInicial(),
-        horariosEmpleadosEnTurno.get(0).getMinutoInicial()));
+        List<Horario> horarioRecurso = obtenerHorarioPorDiaSemana(horarioDisponibleRecurso, diaSemana);
+        
+        
+        try{
 
-        for (Horario horario: horariosEmpleadosEnTurno){
-            if (LocalTime.parse((formatearHorario(horario.getHoraInicial(),horario.getMinutoInicial()))).isBefore(auxiliar)){
-                if (horario.getHoraInicial()>=horarioRecurso.getHoraInicial()) {
-                    if (horario.getMinutoInicial()<=horarioRecurso.getMinutoInicial()) {
-                        auxiliar = LocalTime.parse((formatearHorario(horario.getHoraInicial(),horario.getMinutoInicial())));
+            //Ordenar y ecnontrar 
+            LocalTime auxiliar = LocalTime.parse(formatearHorario(horariosEmpleadosEnTurno.get(0).getHoraInicial(),horariosEmpleadosEnTurno.get(0).getMinutoInicial()));
+
+            for (Horario horario: horariosEmpleadosEnTurno){
+                if (LocalTime.parse((formatearHorario(horario.getHoraInicial(),horario.getMinutoInicial()))).isBefore(auxiliar)){
+                    if (horario.getHoraInicial()>=horarioRecurso.get(0).getHoraInicial()) {
+                        if (horario.getMinutoInicial()<=horarioRecurso.get(0).getMinutoInicial()) {
+                            auxiliar = LocalTime.parse((formatearHorario(horario.getHoraInicial(),horario.getMinutoInicial())));
+                        }
                     }
                 }
             }
-        }
-
-        LocalTime horaInicialEmpleados = auxiliar;
-        
-        auxiliar = LocalTime.parse(horariosEmpleadosEnTurno.get(0).getHoraFinal()+":"+horariosEmpleadosEnTurno.get(0).getHoraFinal());
-        for (Horario horario: horariosEmpleadosEnTurno){
-            if (LocalTime.parse((horario.getHoraFinal()+":"+horario.getHoraFinal())).isAfter(auxiliar)){
-                if (horario.getHoraFinal()<=horarioRecurso.getHoraFinal()) {
-                    if (horario.getMinutoFinal()>=horarioRecurso.getMinutoFinal()) {
-                        auxiliar = LocalTime.parse((horario.getHoraFinal()+":"+horario.getHoraFinal()));
+    
+            LocalTime horaInicialEmpleados = auxiliar;
+            
+            auxiliar = LocalTime.parse(horariosEmpleadosEnTurno.get(0).getHoraFinal()+":"+horariosEmpleadosEnTurno.get(0).getHoraFinal());
+            for (Horario horario: horariosEmpleadosEnTurno){
+                if (LocalTime.parse((horario.getHoraFinal()+":"+horario.getHoraFinal())).isAfter(auxiliar)){
+                    if (horario.getHoraFinal()<=horarioRecurso.get(-1).getHoraFinal()) {
+                        if (horario.getMinutoFinal()>=horarioRecurso.get(-1).getMinutoFinal()) {
+                            auxiliar = LocalTime.parse((horario.getHoraFinal()+":"+horario.getHoraFinal()));
+                        }
                     }
                 }
             }
+    
+            LocalTime horarFinalEmpleado = auxiliar;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
+        
+        
+        
 
-        LocalTime horarFinalEmpleado = auxiliar;
-        
-        
         return horariosDisponibles;
     }
 
     private List<String> calcularHorariosDisponiblesParaOtrasReservas(HorarioDisponible horarioDisponible, List<Reserva> reservasActivas,
             String diaSemana) {
             
-        List<String> horariosDisponibles = new ArrayList<>();
 
+        List<String> horariosDisponibles = new ArrayList<>();
+        
         // Obtener el horario del recurso para el día de la semana dado
-        Horario horarioRecurso = obtenerHorarioPorDiaSemana(horarioDisponible, diaSemana);
-        if (horarioRecurso == null) {
+        List<Horario> horariosRecurso = obtenerHorarioPorDiaSemana(horarioDisponible, diaSemana);
+        if (horariosRecurso == null) {
             return List.of("No hay horario definido para este día");
         }
-
-        int horaInicio = horarioRecurso.getHoraInicial();
-        int minutoInicio = horarioRecurso.getMinutoInicial();
-        int horaFin = horarioRecurso.getHoraFinal();
-        int minutoFin = horarioRecurso.getMinutoFinal();
-
+        //TODO System.out.println(horariosRecurso.toString()+"poerorepr    "+horariosRecurso.size());
         // Crear lista de franjas horarias ocupadas
         List<int[]> franjasOcupadas = new ArrayList<>();
         for (Reserva reserva : reservasActivas) {
@@ -187,33 +194,42 @@ public class AfiliadoService {
                     reserva.getHoraFinal() * 60 + reserva.getMinutoFinal()
             });
         }
-
         // Ordenar franjas horarias ocupadas
         franjasOcupadas.sort((o1, o2) -> Integer.compare(o1[0], o2[0]));
-
-        // Calcular franjas horarias disponibles
-        int inicioDisponible = horaInicio * 60 + minutoInicio;
-        for (int[] franja : franjasOcupadas) {
-            if (inicioDisponible < franja[0]) {
-                horariosDisponibles.add(formatearHora(inicioDisponible) + " - " + formatearHora(franja[0]));
+        
+        for (Horario horarioRecurso: horariosRecurso){
+            int horaInicio = horarioRecurso.getHoraInicial();
+            int minutoInicio = horarioRecurso.getMinutoInicial();
+            int horaFin = horarioRecurso.getHoraFinal();
+            int minutoFin = horarioRecurso.getMinutoFinal();
+            
+            // Calcular franjas horarias disponibles
+            int inicioDisponible = horaInicio * 60 + minutoInicio;
+            for (int[] franja : franjasOcupadas) {
+                if (inicioDisponible < franja[0]) {
+                    horariosDisponibles.add(formatearHora(inicioDisponible) + " - " + formatearHora(franja[0]));
+                }
+                inicioDisponible = Math.max(inicioDisponible, franja[1]);
             }
-            inicioDisponible = Math.max(inicioDisponible, franja[1]);
-        }
-        if (inicioDisponible < horaFin * 60 + minutoFin) {
-            horariosDisponibles.add(formatearHora(inicioDisponible) + " - " + formatearHora(horaFin * 60 + minutoFin));
+            if (inicioDisponible < horaFin * 60 + minutoFin) {
+                horariosDisponibles.add(formatearHora(inicioDisponible) + " - " + formatearHora(horaFin * 60 + minutoFin));
+            }
         }
 
         return horariosDisponibles;
     }
 
-    private Horario obtenerHorarioPorDiaSemana(HorarioDisponible horarioDisponible, String diaSemana) {
+    private List<Horario> obtenerHorarioPorDiaSemana(HorarioDisponible horarioDisponible, String diaSemana) {
+        List<Horario> horariosRecurso = new ArrayList<>();
         for (Horario horario : horarioDisponible.getHorarios()) {
             if (horario.getDiaSemana().equals(diaSemana)) {
-                return horario;
+                horariosRecurso.add(horario);
             }
+            System.out.println(horario.getDiaSemana().equals(diaSemana));
         }
-        return null;
+        return horariosRecurso;
     }
+
 
     private String formatearHora(int minutos) {
         int horas = minutos / 60;
