@@ -116,7 +116,7 @@ public class AfiliadoService {
 
 
         // Obtener las reservas activas en la fecha especificada para el recurso
-        ArrayList<Reserva> reservasActivas = new ArrayList<>(reservaRepository.ReservasActivasPorFechaRecurso(fecha, Long.valueOf(idRecurso)));
+        ArrayList<Reserva> reservasActivas = new ArrayList<>(reservaRepository.reservasActivasPorFechaRecurso(fecha, Long.valueOf(idRecurso)));
 
        // Calcular las franjas horarias disponibles
         List<String> horariosDisponibles = calcularHorariosDisponiblesParaOtrasReservas(horarioDisponibleRecurso, reservasActivas, diaSemana);

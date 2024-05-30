@@ -622,7 +622,7 @@ public class AdminService {
     public String UpdateRecurso(RECURSOPOJO Recurso) {
         int Reservas = 0;
         try {
-            Reservas = reservaRepository.ReservasActivasRecurso(Long.valueOf(Recurso.getIdRecurso())).size();
+            Reservas = reservaRepository.reservasActivasRecurso(Long.valueOf(Recurso.getIdRecurso())).size();
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -638,7 +638,7 @@ public class AdminService {
     public String UpdateUnidad(UNIDADPOJO Unidad) {
         int Reservas = 0;
         try {
-            Reservas = reservaRepository.ReservasActivasUnidad(Long.valueOf(Unidad.getIdUnidad())).size();
+            Reservas = reservaRepository.reservasActivasUnidad(Long.valueOf(Unidad.getIdUnidad())).size();
         } catch (Exception e) {
             return e.getMessage();
         }
