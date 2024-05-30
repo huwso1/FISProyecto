@@ -29,7 +29,7 @@ public ResponseEntity BananaLogin(@RequestBody Usuario USUARIO) {
     System.out.println(USUARIO.getIdUsuario());
     System.out.println(USUARIO.getContrasenia());
     System.out.println(USUARIO.getApellidos());
-    Usuario usuariologeado=usuarioservice.Login(USUARIO);
+    Usuario usuariologeado=usuarioservice.login(USUARIO);
     JSONObject mensaje=new JSONObject();
     if(usuariologeado!=null){
         
