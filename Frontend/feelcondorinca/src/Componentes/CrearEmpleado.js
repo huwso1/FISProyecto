@@ -293,7 +293,7 @@ return(
 
 <h2> Ingrese los datos del nuevo empleado</h2>
 
-<Card style={{  width:'40rem', marginTop:'3rem', backgroundColor:'#D6F2F5' }}>
+<Card  style={{  width:'40rem', marginTop:'3rem', backgroundColor:'#D6F2F5' }}>
 <CardBody>
 <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

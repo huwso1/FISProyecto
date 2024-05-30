@@ -326,9 +326,9 @@ function Nameset(){
 
 return(
   
-<div className="center-card">
+<div  className="center-card">
 
-<Card style={{border:'none', marginTop:'15rem'}} >
+<Card style={{border:'none', marginTop:'3rem',paddingLeft:"10%"}} >
 
 {titulounidad()}
 

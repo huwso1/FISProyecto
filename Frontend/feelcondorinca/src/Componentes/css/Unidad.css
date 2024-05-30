@@ -1,10 +1,10 @@
 .center-card {
-    display: flex;
+    display: relative;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding-top: 10rem;
-    height: 100vh;
+    height: 150vh;
+    padding-left:25%;
   }
   .center-card2 {
     display: flex;

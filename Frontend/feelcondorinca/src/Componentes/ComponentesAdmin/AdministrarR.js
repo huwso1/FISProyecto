@@ -16,10 +16,10 @@ function AdministrarR(){
 const [idRecurso,SetidRecurso]=useState();
 const [ordenarPor,setOrdenar]=useState("");
 const ordenar=["Nombre","Cantidad de reservas"];
-const [recursos,setRecursos]=useState([new Recursomap(1,"Perros",32,"Tinderud"),new Recursomap(2,"Gatos",92,"Tinderud"),new Recursomap(3,"Homicidios",300,"Laboratorios")]);
+const [recursos,setRecursos]=useState([]);
 const [isModifying,setModifying]=useState(true);
 const [nombreM,SetnombreM]=useState();
-const [unidades,setUnidades]=useState([new Unidadmap(1,"Tinderud",32),new Unidadmap(2,"Laboratorios",92),new Unidadmap(3,"Homicidios",300)]);
+const [unidades,setUnidades]=useState([]);
 const [unidadS,setUnidadS]=useState('Tinderud');
 const [message,Setmessage]=useState('');
 

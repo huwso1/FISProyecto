@@ -26,7 +26,7 @@ function Login() {
         }
             
         }).catch((error)=>{
-            SetMessage(error.response.data);
+            SetMessage("Usuario o contraseña invalidos");
         })
     }
     

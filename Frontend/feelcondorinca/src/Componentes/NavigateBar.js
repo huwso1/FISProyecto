@@ -7,7 +7,7 @@ import './css/Navbar.css';
 
  function NavigateBar() {
   return (
-    <div>
+    <div style={{paddingBottom:"50rem"}}>
 <Navbar  bg="primary" variant="dark" expand="lg">
       <Container>
         <Nav classname="me-auto">

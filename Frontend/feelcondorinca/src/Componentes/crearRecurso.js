@@ -487,13 +487,13 @@ return(
   
 <div className="center-card">
 
-<Card style={{border:'none',marginTop:'20rem',height:"5px"}} >
+<Card style={{border:'none', marginTop:'3rem',paddingLeft:"10%"}} >
 
 {titulounidad()}
 
 </Card>
 
-<Card style={{  width:'40rem', marginTop:'7rem', backgroundColor:'#D6F2F5' }}>
+<Card style={{  width:'40rem', marginTop:'3rem', backgroundColor:'#D6F2F5' }}>
 <CardBody>
 <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
