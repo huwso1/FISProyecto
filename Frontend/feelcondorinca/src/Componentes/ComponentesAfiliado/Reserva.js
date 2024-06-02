@@ -6,12 +6,31 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 
-function Reserva({CodigoR,CodigoRe,FechaInicio,FechaFinal,handler}){
+function Reserva({CodigoR,CodigoRe,FechaInicio,FechaFinal,handler,Fecha,Estado}){
     
 const [debug,setdebug]=useState();
+const [estado,setEstado]=useState();
 const handlecancelacion=(idreserva)=>{
     handler(idreserva);
 }
+function estados(){
+    if(Estado==="PENDIENTE"){
+        setEstado("Cancelar");
+        return "Cancelar";
+    }
+    if(Estado==="CANCELADA"){
+        setEstado("cancelada");
+        return "Cancelar";
+    }
+    
+}
+useEffect(()=>{
+estados();
+},[])
+useEffect(()=>{
+    estados();
+    },[Estado])
+
 return(
     <CardGroup>
         <Card style={{alignItems:'center'}} >
@@ -27,13 +46,14 @@ return(
         </Card>
         <Card style={{alignItems:'center'}}>
             <CardBody >
-                <p>Fecha de inicio: {FechaInicio} <br></br>
-                Fecha Final {FechaFinal}</p>
+                <p>Fecha: {Fecha}<br></br>
+                    Hora de inicio: {FechaInicio} <br></br>
+                Hora Final {FechaFinal}</p>
             </CardBody>
         </Card>
         <Card>
             <CardBody>
-            <Form.Control as='input' type='button' value='Cancelar' name='Cancelar' onClick={()=>{handlecancelacion(CodigoR)}}></Form.Control>
+            <Form.Control as='input' type='button' value={estado} name='Cancelar' onClick={()=>{if(estado=="Cancelar"){handlecancelacion(CodigoR) }}}></Form.Control>
             </CardBody>
         </Card>
     </CardGroup>

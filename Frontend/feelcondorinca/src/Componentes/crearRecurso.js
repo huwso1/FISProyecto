@@ -233,6 +233,7 @@ const crearRecursoP=(element)=>{
     "Miercolesi":Miercolesi,"Miercolesf":Miercolesf,"Juevesi":Juevesi,"Juevesf":Juevesf,"Viernesi":Viernesi,"Viernesf":Viernesf,"Sabadosi":Sabadosi,"Sabadosf":Sabadosf,"idUnidad":unidad.id,
     "intervalominimo":unidad.intervalo,"descripcion":descripcion
     }).then((response)=>{
+      window.location.reload();
       SetMessage(response.data.message);
     }).catch((error)=>{
       SetMessage(error.response.data.message);
@@ -246,6 +247,7 @@ const crearRecursoP=(element)=>{
       "Miercolesi":Miercolesi,"Miercolesf":Miercolesf,"Juevesi":Juevesi,"Juevesf":Juevesf,"Viernesi":Viernesi,"Viernesf":Viernesf,"Sabadosi":Sabadosi,"Sabadosf":Sabadosf,"idUnidad":unidad.id,
       "intervalominimo":unidad.intervalo,"idRecurso":unidad.id,"descripcion":descripcion
       }).then((response)=>{
+        window.location.reload();
         SetMessage(response.data.message);
       }).catch((error)=>{
         SetMessage(error.response.data.message);

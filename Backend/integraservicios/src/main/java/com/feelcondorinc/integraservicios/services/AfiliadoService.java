@@ -272,5 +272,27 @@ public class AfiliadoService {
         horarioempleadoaux=horarioempleadoaux+minuto;
         return horarioempleadoaux;
     }
-    
+    public List<Reserva> ReservaUsuario(String idUsuario){
+       Optional<Usuario> usuario= usuarioRepository.findById(idUsuario);
+        try{
+           List<Reserva> listareservas= reservaRepository.findByIdUsuario(usuario.get());
+           return listareservas;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        
+    }
+}
+    public String CancelarReserva(String idReserva){
+        Optional<Reserva> reserva=reservaRepository.findById(Long.valueOf(idReserva));
+        try{    
+            Reserva actualizada=reserva.get();
+            actualizada.setEstadoReserva(EstadoReserva.CANCELADA);
+            reservaRepository.save(actualizada);
+
+        }catch(Exception e){
+            return e.getMessage();
+        }
+        return null;
+    }
 }

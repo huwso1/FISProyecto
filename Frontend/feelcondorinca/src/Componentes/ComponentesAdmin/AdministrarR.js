@@ -357,7 +357,7 @@ return(
         })}
     </Form.Control>
     <Form.Label style={{left:'50%'}}>Unidad</Form.Label>
-    <Form.Control as='select' placeholder='Ordenar Por' onChange={(element)=>{peticionRecursos(element)}}>
+    <Form.Control as='select' placeholder='Ordenar Por' onChange={(element)=>{peticionRecursos(element)}} onClick={(element)=>{peticionRecursos(element)}}>
        { unidades.map((element)=>{
         //Cambiar el value por el id de la unidad
         return <option value={element.id}>{element.nombre}</option>;

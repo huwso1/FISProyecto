@@ -25,12 +25,12 @@ function ListaReservas({Reservas,handlerReservas}){
             </Card>
             <Card style={{backgroundColor:'#129EF2',alignItems:'center'}}>
                 <CardBody >
-                    <p>Codigo del recurso</p>
+                    <p>Recurso</p>
                 </CardBody>
             </Card>
             <Card style={{backgroundColor:'#129EF2',alignItems:'center'}}>
                 <CardBody >
-                    <p>Fecha de inicio-Fecha de finalizacion</p>
+                    <p>Hora inicio-Hora finalizacion</p>
                 </CardBody>
             </Card>
             <Card style={{backgroundColor:'#129EF2'}}>
@@ -39,7 +39,7 @@ function ListaReservas({Reservas,handlerReservas}){
         </CardGroup>
         { Reservas.map((reserva)=>{
             rows++;
-            return <Reserva  CodigoR={reserva.idreserva} CodigoRe={reserva.idrecurso} FechaInicio={reserva.fechainicio} FechaFinal={reserva.fechafinal} handler={handlerReserva}></Reserva>;
+            return <Reserva  CodigoR={reserva.idreserva} CodigoRe={reserva.idrecurso} FechaInicio={reserva.fechainicio} FechaFinal={reserva.fechafinal} handler={handlerReserva} Fecha={reserva.nombrerecurso} Estado={reserva.estado}></Reserva>;
         })}
         </div>
     )

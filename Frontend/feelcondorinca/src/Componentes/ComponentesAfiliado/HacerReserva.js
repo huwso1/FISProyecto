@@ -53,8 +53,10 @@ function MenuReserva({Recursoareservar}){
             var MinutoFinal;
             Horainicial=EHseleccionados.at(0).substring(0,2);
             MinutoInicial=EHseleccionados.at(0).substring(3,5);
-            HoraFinal=EHseleccionados.at(-1).substring(7,9);
-            MinutoFinal=EHseleccionados.at(-1).substring(10,12);
+            console.log(Horainicial+":"+MinutoInicial);
+            HoraFinal=EHseleccionados.at(-1).substring(6,8);
+            MinutoFinal=EHseleccionados.at(-1).substring(9,12);
+            console.log(HoraFinal+":"+MinutoFinal);
         
 
             axios.post("http://localhost:8080/Afiliado/CrearReserva", {"horaInicial":parseInt(Horainicial),"minutoinicial":parseInt(MinutoInicial),
@@ -63,6 +65,7 @@ function MenuReserva({Recursoareservar}){
                 .then((response) => {
                     // Resolvemos la promesa con los datos recibidos
                     Swal.fire({title:"Reserva Creada con esito",text:"",icon:"success"});
+                    window.location.reload();
                     resolve(response.data);
                 })
                 .catch((error) => {

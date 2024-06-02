@@ -51,4 +51,27 @@ public class AfiliadoController {
         return new ResponseEntity("{ \"message\":\"salio mal\"}", HttpStatus.BAD_REQUEST);
 
     }
+    @PostMapping(value = "/ReservasUsuario")
+    public ResponseEntity<List<Recurso>> ReservasUsuario(@RequestBody String body) {
+        JSONObject request = new JSONObject(body);
+        List<Reserva> listaReservas = afiliadoService.ReservaUsuario(request.getInt("idUsuario")+"");
+        if (listaReservas != null) {
+            return new ResponseEntity(listaReservas, HttpStatus.OK);
+        }
+
+        return new ResponseEntity("{ \"message\":\"salio mal\"}", HttpStatus.BAD_REQUEST);
+
+    }
+    @PostMapping(value = "/CancelarReserva")
+    public ResponseEntity<List<Recurso>> CancelarReserva(@RequestBody String body) {
+        JSONObject request = new JSONObject(body);
+        String resultado = afiliadoService.CancelarReserva(request.getInt("idReserva")+"");
+        if (resultado == null) {
+            request.put("resultado",resultado);
+            return new ResponseEntity(request.toString(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity("{ \"message\":\"salio mal\"}", HttpStatus.BAD_REQUEST);
+
+    }
 }
