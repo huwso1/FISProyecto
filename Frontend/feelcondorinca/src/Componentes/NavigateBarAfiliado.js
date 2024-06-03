@@ -4,9 +4,17 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import {Outlet} from 'react-router-dom';
 import './css/Navbar.css';
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function NavigateBarAfiliado() {
-
+    const navigate=useNavigate();
+    useEffect(()=>{
+      if(window.sessionStorage.getItem("rol")!="AFILIADO"){
+        window.sessionStorage.clear();
+        navigate("/");
+      }
+    },[])
     return (
         <div>
             <Navbar bg="primary" variant="dark" expand="lg">

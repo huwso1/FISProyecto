@@ -15,6 +15,7 @@ import axios from 'axios';
 function MisReservas(){
 const [idRecurso,SetidRecurso]=useState();
 const [ordenarPor,setOrdenar]=useState("");
+const [recursos,setRecursos]=useState([]);
 const ordenar=["Mas Reciente"];
 const [reservas,setReservas]=useState([]);
 const [message,Setmessage]=useState("");
@@ -27,6 +28,7 @@ useEffect(() => {
             const data = await peticionReservas();
             console.log(data);
             var listareservas=[];
+            var listarecursos=[];
             data.map((reserva)=>{
                 var Inicio=reserva.horaInicial;
                 
@@ -48,9 +50,12 @@ useEffect(() => {
                 }else{
                     Final=":"+reserva.minutoFinal;
                 }
-                
+                if(!listarecursos.includes(reserva.idRecurso.nombre)){
+                    listarecursos.push(reserva.idRecurso.nombre);
+                };
                 listareservas.push(new Reserva(reserva.idReserva,reserva.idRecurso.nombre,window.sessionStorage.getItem("idUsuario"),Inicio,Final,reserva.estadoReserva,reserva.observaciones,reserva.fecha));
             })
+            setRecursos(listarecursos);
             console.log(listareservas);
             setReservas(listareservas);
             // Una vez que la promesa se resuelve, actualizamos el estado con los datos recibidos
@@ -130,11 +135,17 @@ return(
         return <option value={element}>{element}</option>;
         })}
     </Form.Control>
+    <Form.Label style={{left:'50%'}}>Filtrar por Recurso</Form.Label>
+    <Form.Control as='select' placeholder='Recurso' onChange={(element)=>{SetidRecurso(element.target.value)}} onClick={(element)=>{SetidRecurso(element.target.value)}}>
+       { recursos.map((recurso)=>{
+        return <option value={recurso}>{recurso}</option>;
+        })}
+    </Form.Control>
     
     
 </Card>
 <Card style={{width:'80%'}}>
-    <ListaReservas Reservas={reservas} handlerReservas={handlereliminar} > </ListaReservas>
+    <ListaReservas Reservas={reservas} handlerReservas={handlereliminar} Recurso={idRecurso} > </ListaReservas>
     <p>Debug: {message}</p>
 </Card>
 

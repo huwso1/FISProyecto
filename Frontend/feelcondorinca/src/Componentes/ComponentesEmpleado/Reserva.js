@@ -5,20 +5,71 @@ import Card  from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
+import Popup from './POPUP/Popup.js';
 
-function Reserva({CodigoR,CodigoRe,NombreU,FechaInicio,FechaFinal,handler,estado}){
+function Reserva({CodigoR,CodigoRe,NombreU,FechaInicio,FechaFinal,handler,Estado,Fecha}){
     
 const [debug,setdebug]=useState();
+const[estado,setEstado]=useState();
+const [openPop,setPop]=useState();
 const handlecancelacion=(idreserva)=>{
     handler(idreserva);
 }
-function buttonvalue(){
-    //Añadir el resto de estados de una reserva
-    if(estado=='P'){
-        return 'Pendiente';
-    }
-    return 'nose';
+function onClose(){
+    setPop(false);
 }
+function Handler(){
+    
+    if(estado=="Pendiente" && openPop==true){
+        
+        return <Popup fase={estado} onClose={onClose}></Popup>
+    }
+    if(estado=="PRESTAR"){
+        //Envia la peticion de prestamo :v
+    }
+    if(estado=="DEVOLVER" && Popup==true){
+        //Envia la peticion de devolucion y abre la calificacion
+        return <Popup fase={estado} onClose={onClose}></Popup>
+    }
+    
+}
+function estados(){
+    if(Estado==="PENDIENTE"){
+        setEstado("Pendiente");
+        return "Pendiente";
+    }
+    if(Estado==="CANCELADA"){
+        setEstado("cancelada");
+        return "Cancelada";
+    }
+    if(Estado==="PRESTAR"){
+        setEstado("PRESTAR");
+        return "PRESTAR";
+    }
+    if(Estado==="DEVOLVER"){
+        setEstado("DEVOLVER");
+        return "DEVOLVER";
+    }
+    if(Estado==="FALLA DE SERVICIO"){
+        setEstado("FALLA DE SERVICIO");
+        return "Falla DE SERVICIO";
+    }
+    if(Estado==="DEVUELTO SIN CALIFICAR"){
+        setEstado("DEVUELTO SIN CALIFICAR");
+        return "DEVUELTO SIN CALIFICAR";
+    }
+    if(Estado==="CALIFICADO"){
+        setEstado("CALIFICADO");
+        return "CALIFICADO";
+    }
+    
+}
+useEffect(()=>{
+    estados();
+    },[])
+    useEffect(()=>{
+        estados();
+        },[Estado])
 return(
     <CardGroup>
         <Card style={{alignItems:'center'}} >
@@ -39,14 +90,16 @@ return(
         </Card>
         <Card style={{alignItems:'center'}}>
             <CardBody >
-                <p>Fecha de inicio: {FechaInicio} <br></br>
-                Fecha Final {FechaFinal}</p>
+                <p>Fecha: {Fecha} <br></br>
+                Hora de inicio: {FechaInicio} <br></br>
+                Hora de finalizacion: {FechaFinal}</p>
             </CardBody>
         </Card>
         <Card>
             <CardBody>
-            <Form.Control as='input' type='button' value={buttonvalue()} name='Cancelar' onClick={()=>{handlecancelacion(CodigoR)}}></Form.Control>
+            <Form.Control as='input' type='button' value={estado} name='Cancelar' onClick={()=>{setPop(true)}}></Form.Control>
             </CardBody>
+            {Handler()}
         </Card>
     </CardGroup>
 )

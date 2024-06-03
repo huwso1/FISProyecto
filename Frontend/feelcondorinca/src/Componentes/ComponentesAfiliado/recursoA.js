@@ -11,6 +11,9 @@ function RecursoA({Recurso,handler}){
     
 const [debug,setdebug]=useState();
 
+useEffect(()=>{
+    console.log("cambiao");
+    },[Recurso])
 const handlemodificacion=(Nombre,idrecurso)=>{
     handler(Nombre,idrecurso);
 }

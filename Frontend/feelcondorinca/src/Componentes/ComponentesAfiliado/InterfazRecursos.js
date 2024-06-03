@@ -315,31 +315,30 @@ function InterfazRecursos(){
            setRecursos(listaud);
         
   }
-  
+  function ordenarr(criterio){
+         
+    if(criterio=='Mas Reciente'){
+        var aux=recursos.slice(0);
+        aux.sort((a, b) => {
 
-    if(ordenarPor==='Nombre'){
-        var aux=recursos.slice();
-        unidades.sort((a, b) => {
-            const nameA = a.nombre.toUpperCase(); // ignore upper and lowercase
-            const nameB = b.nombre.toUpperCase(); // ignore upper and lowercase
-            if (nameA < nameB) {
-              return -1;
-            }
-            if (nameA > nameB) {
-              return 1;
-            }
+            
           
             // names must be equal
-            return 0;
+            return b.idreserva-a.idreserva;
           });
+          
+          setRecursos(aux);
     }
+}
+
+ 
     if (isModifying){
     return(
     <div style={{display:'flex',height:'100em'}} >
     
     <Card style={{ minHeight:'100%', backgroundColor:'#D6F2F5', width:'20%', paddingTop:'4rem',height:'100%',alignItems:'center' }}>
      <Form.Label style={{left:'50%'}}>Filtrar por  Recurso</Form.Label>
-     <Form.Control as='select' placeholder='Ordenar Por' onChange={(element)=>{setOrdenar(element.target.value)}}>
+     <Form.Control as='select' placeholder='Ordenar Por' onChange={(element)=>{ordenarr(element.target.value)}}>
         { ordenar.map((element)=>{
          return <option value={element}>{element}</option>;
          })}

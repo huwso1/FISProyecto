@@ -2,11 +2,13 @@ package com.feelcondorinc.integraservicios.repositories;
 
 import com.feelcondorinc.integraservicios.entities.EmpleadosSistema;
 import com.feelcondorinc.integraservicios.entities.Unidad;
+import com.feelcondorinc.integraservicios.entities.Usuario;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * La interfaz EmpleadosSistemaRepository proporciona métodos para realizar operaciones de acceso a datos relacionadas con los empleados del sistema en la base de datos.
@@ -22,4 +24,5 @@ public interface EmpleadosSistemaRepository extends CrudRepository<EmpleadosSist
      * @return Una lista de empleados del sistema asociados a la unidad especificada.
      */
     public List<EmpleadosSistema> findByIdUnidad(Unidad idUnidad);
+    public Optional<EmpleadosSistema> findByIdUsuario(Usuario idUsuario);
 }

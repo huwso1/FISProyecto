@@ -660,6 +660,18 @@ public class AdminService {
 
         //Se crean nuevos horarios, y se modifica el objeto horariodisponible
     }
+    public List<Reserva> ConsultarReservasUnidad(String idUsuario){
+        Optional<Usuario> usuario=usuariorepository.findById(idUsuario);
+       try{
+        Optional<EmpleadosSistema> empleado= empleadosistemarepository.findByIdUsuario(usuario.get());
+        System.out.println(empleado.get().getIdUnidad().getIdUnidad());
+        List<Reserva> reservas=reservaRepository.reservasActivasPorUnidad(empleado.get().getIdUnidad().getIdUnidad());
+        return reservas;
+       }catch(Exception e){
+        System.out.println(e.getMessage()   );
+        return null;
+       }
+    }
 
 
     //TODO

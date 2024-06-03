@@ -20,6 +20,7 @@ import com.POJOS.RECURSOPOJO;
 import com.POJOS.UNIDADPOJO;
 import com.feelcondorinc.integraservicios.entities.EmpleadosSistema;
 import com.feelcondorinc.integraservicios.entities.Recurso;
+import com.feelcondorinc.integraservicios.entities.Reserva;
 import com.feelcondorinc.integraservicios.entities.Unidad;
 import com.feelcondorinc.integraservicios.services.AdminService;
 import com.feelcondorinc.integraservicios.services.UsuarioService;
@@ -175,5 +176,19 @@ public ResponseEntity<List<EmpleadosSistema>> consultarEmpleados(@RequestBody St
     return new ResponseEntity("{ \"message\":\"salio mal\"}",HttpStatus.BAD_REQUEST);
 
 }
+@PostMapping(value="/ReservasUnidad")
+public ResponseEntity<List<EmpleadosSistema>> ReservasUnidad(@RequestBody String body){
+    JSONObject idunidad=new JSONObject(body);
+    System.out.println(idunidad.toString());
+    List<Reserva> Listareservas=adminservice.ConsultarReservasUnidad(idunidad.getString("idUsuario")+"");
+    if(Listareservas!=null){
+        return new ResponseEntity(Listareservas,HttpStatus.OK);  
+    }
+
+    return new ResponseEntity("{ \"message\":\"salio mal\"}",HttpStatus.BAD_REQUEST);
+
+}
+
+
 
 }

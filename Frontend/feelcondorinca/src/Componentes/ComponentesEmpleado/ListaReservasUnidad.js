@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 import ReservaUnidad from './Reserva';
 
-function ListaReservasUnidad({Reservas,handlerReservas}){
+function ListaReservasUnidad({Reservas,handlerReservas,Recurso}){
     const handlerReserva=(idreserva)=>{
         handlerReservas(idreserva);
     }
@@ -44,7 +44,10 @@ function ListaReservasUnidad({Reservas,handlerReservas}){
         </CardGroup>
         { Reservas.map((reserva)=>{
             rows++;
-            return <ReservaUnidad  CodigoR={reserva.idreserva} CodigoRe={reserva.nombrerecurso} NombreU={reserva.nombreusuario} FechaInicio={reserva.fechainicio} FechaFinal={reserva.fechafinal} handler={handlerReserva} estado={reserva.estado}></ReservaUnidad>;
+            if(reserva.idrecurso==Recurso || Recurso==null){
+            return <ReservaUnidad  CodigoR={reserva.idreserva} CodigoRe={reserva.idrecurso} NombreU={reserva.idUsuario} FechaInicio={reserva.fechainicio} FechaFinal={reserva.fechafinal} Fecha={reserva.nombrerecurso} handler={handlerReserva} Estado={reserva.estado}></ReservaUnidad>;
+            }
+            return <></>;
         })}
         </div>
     )
