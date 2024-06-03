@@ -45,7 +45,7 @@ function ListaReservasUnidad({Reservas,handlerReservas,Recurso}){
         { Reservas.map((reserva)=>{
             rows++;
             if(reserva.idrecurso==Recurso || Recurso==null){
-            return <ReservaUnidad  CodigoR={reserva.idreserva} CodigoRe={reserva.idrecurso} NombreU={reserva.idUsuario} FechaInicio={reserva.fechainicio} FechaFinal={reserva.fechafinal} Fecha={reserva.nombrerecurso} handler={handlerReserva} Estado={reserva.estado}></ReservaUnidad>;
+            return <ReservaUnidad  CodigoR={reserva.idreserva} CodigoRe={reserva.idrecurso} NombreU={reserva.idUsuario} FechaInicio={reserva.fechainicio} FechaFinal={reserva.fechafinal} Fecha={reserva.nombrerecurso} handler={handlerReserva} Estado={reserva.estado} ></ReservaUnidad>;
             }
             return <></>;
         })}

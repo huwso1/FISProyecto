@@ -11,16 +11,20 @@ import java.util.Optional;
 
 import com.feelcondorinc.integraservicios.entities.Recurso;
 import com.feelcondorinc.integraservicios.entities.Unidad;
+import com.feelcondorinc.integraservicios.entities.Usuario;
 import com.feelcondorinc.integraservicios.repositories.RecursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.feelcondorinc.integraservicios.entities.Calificacion;
 import com.feelcondorinc.integraservicios.entities.EmpleadosSistema;
 import com.feelcondorinc.integraservicios.entities.Reserva;
 import com.feelcondorinc.integraservicios.entities.models.EstadoReserva;
+import com.feelcondorinc.integraservicios.repositories.CalificacionRepository;
 import com.feelcondorinc.integraservicios.repositories.EmpleadosSistemaRepository;
 import com.feelcondorinc.integraservicios.repositories.ReservaRepository;
+import com.feelcondorinc.integraservicios.repositories.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -29,12 +33,17 @@ public class EmpleadoService {
 
     @Autowired
     private ReservaRepository reservaRepository;
-
+    @Autowired
+    private CalificacionRepository calificacionrepository;
     private List<Reserva> reservas;
     @Autowired
     private RecursoRepository recursoRepository;
     @Autowired
     private ReservaScheduler reservaScheduler;
+    @Autowired
+    private EmpleadosSistemaRepository empleadorepositary;
+    @Autowired
+    private UsuarioRepository usuariorepository;
 
 
     public EmpleadoService(ReservaRepository reservaRepository){
@@ -127,22 +136,34 @@ public class EmpleadoService {
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
-            return "reserva registrada con éxito";
+            return null;
         }catch (Exception e){
             System.out.println(e.getMessage());
             return "no existe la reserva";
         }
     }
 
-    public String registrarDevolucion (int idReserva){
+    public String registrarDevolucion (int idReserva,int calidad,int cumplimiento,int tratopersonal,int estado,String idEmpleado){
         Reserva reserva;
         Optional<Reserva> reservaOpt = reservaRepository.findById( Long.valueOf(idReserva));
+        Optional<EmpleadosSistema> empleado=empleadorepositary.findByIdUsuario(usuariorepository.findById(idEmpleado).get());
+        Usuario cliente=reservaOpt.get().getIdUsuario();
+        Calificacion rating=new Calificacion();
+        rating.setCalidadRecurso(calidad);
+        rating.setCumplimientoHorario(cumplimiento);
+        rating.setTratoPersonal(tratopersonal);
+        rating.setEstadoRecurso(estado);
+        
         try {
             reserva = reservaOpt.get();
-            reserva.setEstadoReserva(EstadoReserva.FINALIZADANOCALIFICADA);
+            reserva.setEstadoReserva(EstadoReserva.FINALIZADACALIFICADA);
+            rating.setReserva(reserva);
+            rating.setIdEmpleado(empleado.get());
+            rating.setIdUsuario(cliente);
+            calificacionrepository.save(rating);
             reservaRepository.save(reserva);
             Optional<Recurso> recursoOpt = recursoRepository.findById(reserva.getIdRecurso().getIdRecurso());
-            return "reserva finalizada con éxito";
+            return null;
         }catch (Exception e){
             System.out.println(e.getMessage());
             return "no existe la reserva";

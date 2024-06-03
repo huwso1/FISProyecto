@@ -9,18 +9,21 @@ import Popup from './POPUP/Popup.js';
 import { Rating } from 'react-simple-star-rating'
 import axios from 'axios';
 
-function Calificacion({idReserva}){
+function Calificacion({idReserva,idUsuario}){
 const [calidad,setCaliddad]=useState(0);
 const [cumplimientohorario,setCumplimientohorario]=useState(0);
 const [trato_personal,setTratoPersonal]=useState(0);
+const [estado,setEstado]=useState(0);
 const [message,setMessage]=useState("");
 
 const PeticionCalificacion=(element)=>{
         element.preventDefault()
-            axios.post("http://localhost:8080/Afiliado/Calificacion", {"idReserva":idReserva,"calidad":calidad,"cumplimientohorario":cumplimientohorario,"tratopersonal":trato_personal })
+        
+            axios.post("http://localhost:8080/Empleado/RegistrarDevolucion", {"idReserva":idReserva,"calidad":calidad,"cumplimientohorario":cumplimientohorario,"tratopersonal":trato_personal,"estado":estado,"idEmpleado":window.sessionStorage.getItem("idUsuario") })
                 .then((response) => {
                     // Resolvemos la promesa con los datos recibidos
-                    
+                    alert("Se ha devuelto el recurso con esito");
+                    window.location.reload();
                     
                 })
                 .catch((error) => {
@@ -51,6 +54,12 @@ return(
     <Form.Label style={{left:'50%'}}>¿Como calificaria la atencion de nuestros empleados?</Form.Label>
            <Rating
         onClick={(rate)=>{setTratoPersonal(rate)}}
+      />
+      </Card>
+      <Card style={{border:"0px"}}>
+    <Form.Label style={{left:'50%'}}>¿Como calificaria el estado fisico de los recursos utilizados?</Form.Label>
+           <Rating
+        onClick={(rate)=>{setEstado(rate)}}
       />
       </Card>
       <Card style={{border:"0px",justifyContent:"center",alignItems:"center",paddingTop:"2rem"}}>

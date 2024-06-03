@@ -66,7 +66,7 @@ public interface ReservaRepository extends CrudRepository<Reserva, Long> {
     
     public List<Reserva> findByIdUsuario(Usuario idUsuario);
 
-    @Query(value="SELECT re.* from recursos r, reservas re where r.id_recurso=re.id_recurso and r.id_unidad=?1 AND re.estado != 'CANCELADA'",nativeQuery=true)
+    @Query(value="SELECT re.* from recursos r, reservas re where r.id_recurso=re.id_recurso and r.id_unidad=?1 AND re.estado != 'CANCELADA' AND re.estado !='FINALIZADACALIFICADA'",nativeQuery=true)
     public List<Reserva>  reservasActivasPorUnidad(Long idUnidad);
 
     @Query(value="select * from reservas",nativeQuery=true)

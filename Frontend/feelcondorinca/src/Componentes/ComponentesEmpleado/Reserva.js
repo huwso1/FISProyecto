@@ -8,7 +8,7 @@ import '../css/Unidad.css';
 import Popup from './POPUP/Popup.js';
 import axios from 'axios';
 
-function Reserva({CodigoR,CodigoRe,NombreU,FechaInicio,FechaFinal,handler,Estado,Fecha}){
+function Reserva({CodigoR,CodigoRe,NombreU,FechaInicio,FechaFinal,handler,Estado,Fecha,CodigoU}){
     
 const [debug,setdebug]=useState();
 const[estado,setEstado]=useState();
@@ -19,6 +19,7 @@ const PeticionPrestar=(e)=>{
     
     axios.post("http://localhost:8080/Empleado/RegistrarPrestamo",{"idReserva":CodigoR}).then((response)=>{
         alert("Reserva prestada con esito");
+        window.location.reload();
     }).catch((response)=>{
         setdebug(response);
     })
@@ -26,8 +27,9 @@ const PeticionPrestar=(e)=>{
 function updatePop(bool){
 if(estado=="Por Confirmar"){
     PeticionPrestar();
-}
+}else{
 setPop(bool);
+}
 }
 
 const handlecancelacion=(idreserva)=>{
@@ -38,16 +40,14 @@ function onClose(){
 }
 function Handler(){
     
-    if(estado=="Pendiente" && openPop==true){
-        
-        return <Popup fase={estado} onClose={onClose}></Popup>
-    }
+    
     if(estado=="PRESTAR"){
         //Envia la peticion de prestamo :v
     }
-    if(estado=="DEVOLVER" && Popup==true){
+    
+    if(estado=="DEVOLVER" && openPop==true){
         //Envia la peticion de devolucion y abre la calificacion
-        return <Popup fase={estado} onClose={onClose}></Popup>
+        return <Popup fase={estado} onClose={onClose} utilitary={CodigoR} codigo={CodigoU}></Popup>
     }
     if(estado=="Por Confirmar"){
             
@@ -71,9 +71,13 @@ function estados(){
         setEstado("PRESTAR");
         return "PRESTAR";
     }
-    if(Estado==="DEVOLVER"){
+    if(Estado==="CONFIRMADA"){
         setEstado("DEVOLVER");
-        return "DEVOLVER";
+        return "CONFIRMADA";
+    }
+    if(Estado==="FINALIZADACALIFICADA"){
+        setEstado("Finalizada");
+        return "Finalizada";
     }
     if(Estado==="FALLA DE SERVICIO"){
         setEstado("FALLA DE SERVICIO");

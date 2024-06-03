@@ -6,11 +6,9 @@ import Calificacion from '../Calificacion.js';
 function Popup({ codigo,fase,onClose,utilitary }) {
 
     function formulariodefase(){
-        if(fase=="Pendiente"){
-          return <Calificacion></Calificacion>
-        }
-        if(fase=="Devuelto"){
-          return <Calificacion/>
+        
+        if(fase=="DEVOLVER"){
+          return <Calificacion idReserva={utilitary} />
         }
         
        

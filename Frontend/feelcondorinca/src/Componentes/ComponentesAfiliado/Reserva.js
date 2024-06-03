@@ -18,11 +18,38 @@ function estados(){
         setEstado("Cancelar");
         return "Cancelar";
     }
+    if(Estado==="PORCONFIRMAR"){
+        setEstado("Por Confirmar");
+        return "Por Confirmar";
+    }
     if(Estado==="CANCELADA"){
         setEstado("cancelada");
-        return "Cancelar";
+        return "Cancelada";
     }
-    
+    if(Estado==="PRESTAR"){
+        setEstado("PRESTAR");
+        return "PRESTAR";
+    }
+    if(Estado==="CONFIRMADA"){
+        setEstado("DEVOLVER");
+        return "CONFIRMADA";
+    }
+    if(Estado==="FINALIZADACALIFICADA"){
+        setEstado("Finalizada");
+        return "Finalizada";
+    }
+    if(Estado==="FALLA DE SERVICIO"){
+        setEstado("FALLA DE SERVICIO");
+        return "Falla DE SERVICIO";
+    }
+    if(Estado==="DEVUELTO SIN CALIFICAR"){
+        setEstado("DEVUELTO SIN CALIFICAR");
+        return "DEVUELTO SIN CALIFICAR";
+    }
+    if(Estado==="CALIFICADO"){
+        setEstado("CALIFICADO");
+        return "CALIFICADO";
+    }
 }
 useEffect(()=>{
 estados();

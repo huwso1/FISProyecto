@@ -29,7 +29,7 @@ return(
                 <p>Lunes:{Recurso.horariolunesi}-{Recurso.horariolunesf}</p> 
                 <p>Martes:{Recurso.horariomartesi}-{Recurso.horariomartesf}</p> 
                 <p>Miercoles:{Recurso.horariomiercolesi}-{Recurso.horariomiercolesf}</p> 
-                <p>Jueves:{Recurso.horariojuevessi}-{Recurso.horariojuevesf}</p> 
+                <p>Jueves:{Recurso.horariojuevesi}-{Recurso.horariojuevesf}</p> 
                 <p>Viernes:{Recurso.horarioviernesi}-{Recurso.horarioviernesf}</p> 
                 <p>Sabado:{Recurso.horariosabadoi}-{Recurso.horariosabadof}</p> 
             </CardBody>
