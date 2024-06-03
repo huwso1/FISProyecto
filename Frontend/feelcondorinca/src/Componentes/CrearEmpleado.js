@@ -36,6 +36,7 @@ const crearempleado=(element)=>{
   axios.post("http://localhost:8080/Administracion/CrearEmpleado",{"Nombre":nombre,"Apellido":apellido,"Documento":documento,"Telefono":telefono,"Lunesi":Lunesi,"Lunesf":Lunesf,"Martesi":Martesi,"Martesf":Martesf,
   "Miercolesi":Miercolesi,"Miercolesf":Miercolesf,"Juevesi":Juevesi,"Juevesf":Juevesf,"Viernesi":Viernesi,"Viernesf":Viernesf,"Sabadosi":Sabadosi,"Sabadosf":Sabadosf,"idUnidad":Unidad.id
   }).then((response)=>{
+  window.location.reload();
   SetMessage(response.data.message);
   }).catch((error)=>{
   SetMessage(error.response.data.message);

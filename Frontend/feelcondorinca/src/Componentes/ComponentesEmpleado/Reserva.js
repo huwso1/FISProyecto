@@ -6,12 +6,30 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/Unidad.css';
 import Popup from './POPUP/Popup.js';
+import axios from 'axios';
 
 function Reserva({CodigoR,CodigoRe,NombreU,FechaInicio,FechaFinal,handler,Estado,Fecha}){
     
 const [debug,setdebug]=useState();
 const[estado,setEstado]=useState();
 const [openPop,setPop]=useState();
+
+
+const PeticionPrestar=(e)=>{
+    
+    axios.post("http://localhost:8080/Empleado/RegistrarPrestamo",{"idReserva":CodigoR}).then((response)=>{
+        alert("Reserva prestada con esito");
+    }).catch((response)=>{
+        setdebug(response);
+    })
+}
+function updatePop(bool){
+if(estado=="Por Confirmar"){
+    PeticionPrestar();
+}
+setPop(bool);
+}
+
 const handlecancelacion=(idreserva)=>{
     handler(idreserva);
 }
@@ -31,12 +49,19 @@ function Handler(){
         //Envia la peticion de devolucion y abre la calificacion
         return <Popup fase={estado} onClose={onClose}></Popup>
     }
+    if(estado=="Por Confirmar"){
+            
+    }
     
 }
 function estados(){
     if(Estado==="PENDIENTE"){
         setEstado("Pendiente");
         return "Pendiente";
+    }
+    if(Estado==="PORCONFIRMAR"){
+        setEstado("Por Confirmar");
+        return "Por Confirmar";
     }
     if(Estado==="CANCELADA"){
         setEstado("cancelada");
@@ -97,7 +122,7 @@ return(
         </Card>
         <Card>
             <CardBody>
-            <Form.Control as='input' type='button' value={estado} name='Cancelar' onClick={()=>{setPop(true)}}></Form.Control>
+            <Form.Control as='input' type='button' value={estado} name='Cancelar' onClick={()=>{updatePop(true)}}></Form.Control>
             </CardBody>
             {Handler()}
         </Card>

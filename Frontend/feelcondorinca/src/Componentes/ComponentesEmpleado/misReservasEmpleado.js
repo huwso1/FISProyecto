@@ -36,12 +36,15 @@ useEffect(() => {
                 
                 if(reserva.horaInicial<10){
                     Inicio="0"+Inicio;
+                    
                 }
+                
                 if(reserva.minutoInicial<10){
                     Inicio=Inicio+":0"+reserva.minutoInicial;
                 }else{
-                    Inicio=":"+reserva.minutoInicial;
+                    Inicio=Inicio+":"+reserva.minutoInicial;
                 }
+                
                 var Final=reserva.horaFinal;
                 
                 if(reserva.horaFinal<10){

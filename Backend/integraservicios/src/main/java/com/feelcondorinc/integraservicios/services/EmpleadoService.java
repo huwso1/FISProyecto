@@ -1,6 +1,7 @@
 package com.feelcondorinc.integraservicios.services;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,41 +20,49 @@ import com.feelcondorinc.integraservicios.entities.models.EstadoReserva;
 import com.feelcondorinc.integraservicios.repositories.EmpleadosSistemaRepository;
 import com.feelcondorinc.integraservicios.repositories.ReservaRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class EmpleadoService {
 
     @Autowired
     private ReservaRepository reservaRepository;
 
-    private List<Reserva> reservas = agregarReservas();
+    private List<Reserva> reservas;
 
+    
+    public EmpleadoService(ReservaRepository reservaRepository){
+        
+        this.reservaRepository=reservaRepository;
+    }
 
-    //TODO: Arreglar pq no encuentra las reservas
+    
     private ArrayList<Reserva> agregarReservas(){
         ArrayList<Reserva> reservasNuevas = new ArrayList<>();
         try{
-            assert reservaRepository != null;
-            Iterator<Reserva> listaReservas = reservaRepository.findAll().iterator();
+           
+            List<Reserva> listaReservas = reservaRepository.findreservas();
 
-            while(listaReservas.hasNext()){
-                reservasNuevas.add(listaReservas.next());
-            }
+           reservasNuevas=new ArrayList(listaReservas);
+           
 
         }catch (Exception e){
-            System.out.println("ola");
+            System.out.println(e.getMessage());
         }
-        System.out.println(reservasNuevas);
+        
         return reservasNuevas;
     }
     
 
-
-    @Scheduled(fixedRate = 5000)
+    
+    @Scheduled(fixedDelay=5000)
     public void cambiarAConfirmarble(){
+        reservas=agregarReservas();
         try {            
             for (Reserva reserva : reservas) {
                 if (validarHoraReserva(reserva)) {
                     reserva.setEstadoReserva(EstadoReserva.PORCONFIRMAR);
+                    reservaRepository.save(reserva);
                 }
             }
         }catch(Exception e){
@@ -85,10 +94,10 @@ public class EmpleadoService {
     public boolean validarHoraReserva(Reserva reserva) {
 
         if (reserva.getEstadoReserva().name().equals("PENDIENTE")) {
-            LocalDateTime horaReserva = formatearHora(reserva.getHoraInicial(), reserva.getMinutoInicial());
-            LocalDateTime horaLocal = formatearHora(LocalDateTime.now().getHour(), LocalDateTime.now().getMinute());
-            LocalDateTime cincoMinutosAntes = horaReserva.minusMinutes(5);
-            LocalDateTime cincoMinutosDespues = horaReserva.plusMinutes(5);
+            LocalTime horaReserva = formatearHora(reserva.getHoraInicial(), reserva.getMinutoInicial());
+            LocalTime horaLocal = formatearHora(LocalDateTime.now().getHour(), LocalDateTime.now().getMinute());
+            LocalTime cincoMinutosAntes = horaReserva.minusMinutes(5);
+            LocalTime cincoMinutosDespues = horaReserva.plusMinutes(5);
             return (horaLocal.isAfter(cincoMinutosAntes) && horaLocal.isBefore(cincoMinutosDespues)) || (horaLocal.equals(cincoMinutosDespues)) || horaLocal.equals(cincoMinutosAntes);
         }
         else return false;   
@@ -96,17 +105,24 @@ public class EmpleadoService {
 
 
 
-    public LocalDateTime formatearHora(int hora, int minuto){
-        String horarioFormateado=hora+"";
+    public LocalTime formatearHora(int hora, int minuto){
+        String horarioFormateado="";
+        try{
         if(hora<10){
-            horarioFormateado="0"+horarioFormateado;
+            horarioFormateado=horarioFormateado+"0";
+            
         }
-        horarioFormateado=horarioFormateado+":";
+        horarioFormateado=horarioFormateado+hora+":";
         if(minuto<10){
             horarioFormateado=horarioFormateado+"0";
         }
         horarioFormateado=horarioFormateado+minuto;
-        return LocalDateTime.parse(horarioFormateado);
+        
+        return LocalTime.parse(horarioFormateado);
+    }catch(Exception e){
+        System.out.println(e.getMessage()+"Error en formatear hora");
+        return null;
+    }
     }
 
 
