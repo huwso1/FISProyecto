@@ -4,11 +4,9 @@ import java.util.List;
 
 import com.feelcondorinc.integraservicios.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.feelcondorinc.integraservicios.entities.Reserva;
 import com.feelcondorinc.integraservicios.services.ReservaScheduler;
@@ -18,18 +16,26 @@ import com.feelcondorinc.integraservicios.services.ReservaScheduler;
 @RequestMapping(value="/Empleado")
 
 public class EmpleadoController {
+    @Autowired
+    private EmpleadoService empleadoService;
 
-    // @Autowired
-    // private ReservaScheduler reservaScheduler;
-
-    // @Autowired
-    // private EmpleadoService empleadoService;
-
-    // @GetMapping("/ListaReservasPendientes")
-    // public List<Reserva> getReservasPendientes(@RequestParam("idUnidad") String idUnidad) {
-    //     return reservaScheduler.getReservasPendientes(idUnidad);
-    // }
+    @PostMapping("/RegistrarPresatmo")
+    public ResponseEntity RegistrarPrestamo(@RequestBody int idReserva){
+        String message=empleadoService.registrarPrestamo(idReserva);
+        if(message==null){
+            return new ResponseEntity(message, HttpStatus.OK);
+        }
+        return new ResponseEntity("{ \" " + message +"\":\"salio mal\"}",HttpStatus.BAD_REQUEST);
+    }
 
 
+    @PostMapping("/RegistrarDevolucion")
+    public ResponseEntity RegistrarDevolucion(@RequestBody int idReserva){
+        String message=empleadoService.registrarDevolucion(idReserva);
+        if(message==null){
+            return new ResponseEntity(message, HttpStatus.OK);
+        }
+        return new ResponseEntity("{ \" " + message +"\":\"salio mal\"}",HttpStatus.BAD_REQUEST);
+    }
 
 }

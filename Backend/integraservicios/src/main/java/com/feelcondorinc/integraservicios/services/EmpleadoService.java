@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 
+import com.feelcondorinc.integraservicios.entities.Recurso;
 import com.feelcondorinc.integraservicios.entities.Unidad;
+import com.feelcondorinc.integraservicios.repositories.RecursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -29,8 +31,12 @@ public class EmpleadoService {
     private ReservaRepository reservaRepository;
 
     private List<Reserva> reservas;
+    @Autowired
+    private RecursoRepository recursoRepository;
+    @Autowired
+    private ReservaScheduler reservaScheduler;
 
-    
+
     public EmpleadoService(ReservaRepository reservaRepository){
         
         this.reservaRepository=reservaRepository;
@@ -70,25 +76,6 @@ public class EmpleadoService {
         }
     }
 
-    // @Autowired
-    // private ReservaRepository reservaRepository; 
-
-    // @Autowired
-    // private EmpleadosSistemaRepository empleadosSistemaRepository;
-
-    // public List<Reserva> obtenerListaReservasPendientes(String idEmpleado){
-    //     Optional<EmpleadosSistema> empleadoOpt = empleadosSistemaRepository.findById(Long.parseLong(idEmpleado));
-    //     if (empleadoOpt.isEmpty()) {
-    //         System.out.println("empleado no encontrado");
-    //     }
-    //     EmpleadosSistema empleadoSistema = empleadoOpt.get();
-    //     Long idUnidad = empleadoSistema.getIdUnidad().getIdUnidad();
-
-    //     Collection<Reserva> coleccionReservas = reservaRepository.reservasActivasUnidad(idUnidad);
-    //     ArrayList<Reserva> reservas = new ArrayList<>(coleccionReservas);
-    //     return reservas;
-    // }
-
 
 
     public boolean validarHoraReserva(Reserva reserva) {
@@ -125,5 +112,40 @@ public class EmpleadoService {
     }
     }
 
+    public String registrarPrestamo(int idReserva){
+        Reserva reserva;
+        Optional<Reserva> reservaOpt = reservaRepository.findById( Long.valueOf(idReserva));
+        try {
+            reserva = reservaOpt.get();
+            reserva.setEstadoReserva(EstadoReserva.CONFIRMADA);
+            reservaRepository.save(reserva);
+            Optional<Recurso> recursoOpt = recursoRepository.findById(reserva.getIdRecurso().getIdRecurso());
+            try {
+                Recurso recurso = recursoOpt.get();
+                recurso.setCantidaddereservas(recurso.getCantidaddereservas()+1);
+                recursoRepository.save(recurso);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            return "reserva registrada con éxito";
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return "no existe la reserva";
+        }
+    }
 
+    public String registrarDevolucion (int idReserva){
+        Reserva reserva;
+        Optional<Reserva> reservaOpt = reservaRepository.findById( Long.valueOf(idReserva));
+        try {
+            reserva = reservaOpt.get();
+            reserva.setEstadoReserva(EstadoReserva.FINALIZADANOCALIFICADA);
+            reservaRepository.save(reserva);
+            Optional<Recurso> recursoOpt = recursoRepository.findById(reserva.getIdRecurso().getIdRecurso());
+            return "reserva finalizada con éxito";
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return "no existe la reserva";
+        }
+    }
 }
